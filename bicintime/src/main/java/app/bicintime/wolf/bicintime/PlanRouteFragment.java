@@ -3,15 +3,13 @@ package app.bicintime.wolf.bicintime;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,22 +39,32 @@ public class PlanRouteFragment extends Fragment implements RecyclerPlanRouteAdap
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.plan_route, container, false);
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_id); //getting the recyclerview into java code
+        LinearLayout linearLayout_start = (LinearLayout) rootView.findViewById(R.id.linearl_start);
+
+        linearLayout_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Hi!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        //recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_id); //getting the recyclerview into java code
         //recyclerView2 = (RecyclerView) rootView.findViewById(R.id.recycler_id2);
-        adapter = new RecyclerPlanRouteAdapter(getActivity(), getData()); //passing the context and some resources(or data) to the adapter
+        //adapter = new RecyclerPlanRouteAdapter(getActivity(), getData()); //passing the context and some resources(or data) to the adapter
         //adapter2 = new RecyclerPlanRouteAdapter2(getActivity(), getData2());
-        recyclerView.setHasFixedSize(true); //I have to check what exactly does this
+        //recyclerView.setHasFixedSize(true); //I have to check what exactly does this
 
         //adapter2.setClickListener2(this);
-        adapter.setClickListener(this);  //means that this activity will handle the clicks on the recycler
-        recyclerView.setAdapter(adapter); //This step is mandatory
+        //adapter.setClickListener(this);  //means that this activity will handle the clicks on the recycler
+        //recyclerView.setAdapter(adapter); //This step is mandatory
         //recyclerView2.setAdapter(adapter2);
         //remember layout manager...
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); //this step is also mandatory
+        //recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); //this step is also mandatory
         //recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Button button_plan_route = (Button) rootView.findViewById(R.id.buttonPlanRoute3);
+        /*Button button_plan_route = (Button) rootView.findViewById(R.id.buttonPlanRoute3);
 
         button_plan_route.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +85,7 @@ public class PlanRouteFragment extends Fragment implements RecyclerPlanRouteAdap
 
 
             }
-        });
+        });*/
 
 
 
