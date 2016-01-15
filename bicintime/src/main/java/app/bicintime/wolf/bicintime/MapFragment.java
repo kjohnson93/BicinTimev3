@@ -16,27 +16,26 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 /**
- * Created by wolf on 12/31/2015.
+ * Created by wolf on 1/15/2016.
  */
-public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMarkerClickListener{
+public class MapFragment extends Fragment {
+
 
     MapView mMapView;
     private GoogleMap googleMap;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        View rootView = inflater.inflate(R.layout.map_fragment, container, false);
 
-        // inflat and return the layout
-        View v = inflater.inflate(R.layout.plan_route_start_a2, container,
-                false);
-        mMapView = (MapView) v.findViewById(R.id.mapView);
+        mMapView = (MapView) rootView.findViewById(R.id.mapFragmentView);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume();// needed to get the map to display immediately
@@ -45,11 +44,7 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
-    }
-
-
-        double latitude_array[]={41.401845, 41.395149, 41.398755, 41.388452 };
-        double longitude_array[]= {2.181116, 2.171503, 2.195879, 2.196050};
+        }
 
 
         googleMap = mMapView.getMap();
@@ -59,28 +54,44 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
 
         final LatLng WTC = new LatLng(41.372203, 2.180496);
 
+        double latitude_array[]={41.401845, 41.395149, 41.398755, 41.388452 };
+        double longitude_array[]= {2.181116, 2.171503, 2.195879, 2.196050};
+
+
+        googleMap = mMapView.getMap();
 
 
 
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps").draggable(true);
+        MarkerOptions markerOptions[];
 
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
 
-        // adding marker
-        googleMap.addMarker(marker);
+
+        for (int i= 0; i<latitude_array.length; i++){
+
+            markers.add(new MarkerOptions().position(
+                    new LatLng(latitude_array[i], longitude_array[i])).title("Hello Maps"));
+
+            markers.get(i).icon(BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+            googleMap.addMarker(markers.get(i));
+
+
+
+        }
+
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
-        return v;
 
+
+        return rootView;
     }
+
 
     @Override
     public void onResume() {
@@ -116,15 +127,4 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
         Log.d("BACK", "Fuck you, Reloading PlanA2");
 
     }
-
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-
-
-
-        return false;
-    }
-
-
 }

@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         switch (itemDrawer.getItemId()) {
 
             case R.id.id_drawer_map:
-                fragmentoGenerico = new PlanRouteFragmentStartA2(); ;
+                fragmentoGenerico = new MapFragment(); ;
                 break;
             case R.id.id_drawer_plan:
                 fragmentoGenerico =  new PlanRouteFragment() ;

@@ -1,15 +1,19 @@
 package app.bicintime.wolf.bicintime;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,9 @@ import java.util.List;
 //Fragment class that shows the main plan route section of the app, it uses several things as a recycler view and sharedpreferences to read and save things
 
 public class PlanRouteFragment extends Fragment implements RecyclerPlanRouteAdapter.ClickListener {
+
+    private static final String LOG_TAG = "LOGTRACE";
+    private static final String DEFAULT = "Choose a Start";
 
 
     RecyclerPlanRouteAdapter adapter; //this adapter is necessary because I must create a layout for the recycler view with the help of an recyclerview adapter
@@ -39,12 +46,23 @@ public class PlanRouteFragment extends Fragment implements RecyclerPlanRouteAdap
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.plan_route, container, false);
 
+        Log.d(LOG_TAG, "Entering onCreateView PlanRouteFragment");
+
         LinearLayout linearLayout_start = (LinearLayout) rootView.findViewById(R.id.linearl_start);
 
         linearLayout_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "Hi!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "Hi!", Toast.LENGTH_SHORT).show();
+
+                Log.d(LOG_TAG,"Entering on the clicklistener");
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.root_framelayout, new PlanRouteFragmentStartA());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                fragmentManager.executePendingTransactions();
 
             }
         });
@@ -156,6 +174,23 @@ public class PlanRouteFragment extends Fragment implements RecyclerPlanRouteAdap
         });
         */
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(LOG_TAG, "Entering onResume PlanRouteFragment");
+        super.onResume();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String startData = sharedPreferences.getString("StartLocation",DEFAULT);
+
+        TextView textViewStart = (TextView) getView().findViewById(R.id.title_row1_2);
+        textViewStart.setText(startData);
+        editor.remove("StartLocation"); //Para que no quede almacenda en caso de un futuro acceso, se lee y se quita.
+        editor.commit();
+
+
     }
 
     public static List<Information> getData() {
