@@ -1,4 +1,4 @@
-package app.bicintime.wolf.bicintime;
+package app.bicintime.wolf.bicintimeactivities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

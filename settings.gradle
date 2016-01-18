@@ -1,1 +1,1 @@
-include ':app', ':bicintime'
+include ':app', ':bicintime', ':bicintimeactivities'

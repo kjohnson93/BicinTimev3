@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
  */
 public class MapFragment extends Fragment {
 
+    private static final String LOG_TAG = "LOGTRACE";
+    private static final String LOG_BACK = "LOGBACK";
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -89,6 +92,8 @@ public class MapFragment extends Fragment {
 
 
 
+
+
         return rootView;
     }
 
@@ -100,7 +105,7 @@ public class MapFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
 
-        Log.d("BACK", "The backentrycount is: " + fragmentManager.getBackStackEntryCount());
+        Log.d(LOG_BACK, "The backentrycount is: " + fragmentManager.getBackStackEntryCount());
         mMapView.onResume();
     }
 

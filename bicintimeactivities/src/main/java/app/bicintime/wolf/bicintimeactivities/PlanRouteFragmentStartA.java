@@ -1,7 +1,6 @@
-package app.bicintime.wolf.bicintime;
+package app.bicintime.wolf.bicintimeactivities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +19,7 @@ import java.util.List;
  */
 public class PlanRouteFragmentStartA extends Fragment implements View.OnClickListener {
 
+    private static final String FRAGMENT_KEY = "test";
     List<Fragment> fragmentList = Collections.emptyList();
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";
@@ -60,6 +59,7 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
 
                 Log.d(LOG_TAG, "Entering onClick with view id: " + v.getId());
 
+                /*
                 TextView textViewStart = (TextView) getView().findViewById(R.id.textview_coordinates_current);
 
                 String startData = textViewStart.getText().toString();
@@ -70,13 +70,18 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
                 Log.d(LOG_TAG, "Data put is:" + startData);
 
                 editor.putString("StartLocation", startData);
-                editor.commit();
+                editor.commit();*/
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 //fragmentTransaction.addToBackStack(PlanRouteFragmentStartA.class.getName());
                 //fragmentTransaction.replace(R.id.root_framelayout, new PlanRouteFragment());//I have to call this method instead of popbackstack because the later won't call the onResume
                 //fragmentTransaction.commit();
                 //fragmentManager.executePendingTransactions(); //when doing this, sharedpreferences works, otherwise don't
+
+                Intent intent = new Intent();
+                intent.putExtra(FRAGMENT_KEY, "Ok");
+                getTargetFragment().onActivityResult(getTargetRequestCode(), getActivity().RESULT_OK, intent);
+
                 fragmentManager.popBackStack();
                 //TODO Find out why this behaviour of sharedpreferences -> because onresumen on PlanRouteFragment is being called twice. I need to popbackstack nstead
                 //but popbacktack is not colling onResume, onResume is only called when Activity onResume is being called

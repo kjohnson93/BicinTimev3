@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     public FragmentManager fragmentManager;
 
+    private static final String LOG_TAG = "LOGTRACE";
+    private static final String LOG_BACK = "LOGBACK";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragmentoGenerico = null;
          fragmentManager = getSupportFragmentManager();
 
+        setTitle(itemDrawer.getTitle());
+
         switch (itemDrawer.getItemId()) {
 
             case R.id.id_drawer_map:
@@ -86,15 +91,17 @@ public class MainActivity extends AppCompatActivity {
         }
         if (fragmentoGenerico != null) {
 
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.addToBackStack(MainActivity.class.getName());
-            fragmentTransaction.replace(R.id.contenedor_principal, fragmentoGenerico);
-            fragmentTransaction.commit();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); //todo surge de aqui, el Add to backstack es el que crea este fragmento de más...
+            //fragmentTransaction.addToBackStack(MainActivity.class.getName());
+            fragmentTransaction.add(R.id.contenedor_principal, fragmentoGenerico);
+            fragmentTransaction.commit();  //dentro de mapfragment debería crear este commit!!
 
         }
 
         // Setear título actual
-        setTitle(itemDrawer.getTitle());
+
     }
 
     private FragmentManager.OnBackStackChangedListener getListener()
@@ -108,11 +115,11 @@ public class MainActivity extends AppCompatActivity {
                 if (manager != null)
                 {
 
-                    Log.d("BACK","Hello your backstack has been changed !!");
+                    Log.d(LOG_BACK, "Hello your backstack has been changed !!");
 
-                    Fragment fragment = fragmentManager.getFragments().get(fragmentManager.getBackStackEntryCount() -1);
+                    Fragment fragment = fragmentManager.getFragments().get(fragmentManager.getBackStackEntryCount());
 
-                    Log.d("BACK", "I am the fragment: " + fragment.toString());
+                    Log.d(LOG_BACK, "I am the fragment: " + fragment.toString());
 
                     fragment.onResume(); //This is being called twice, after Fragment's creation and when the backstack changes
 
@@ -140,15 +147,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //TODO MainActivity counts as an entry on the backstack, my plan is to let the map fragment to close the app and not to travel to mainactivty blank screen
+    //TODO Also I have to solve or make the right arrangement to provide a correct back and forth navigation through the app.
+    //TODO'S DONE
     @Override
     public void onBackPressed() {
-        Log.d("BACK", "Entering onBackPressed MainActivity");
+        //Log.d(LOG_TAG, "Entering onBackPressed MainActivity with Backstackentrycounty: " + fragmentManager.getBackStackEntryCount() );
 
-
-        if(fragmentManager.getBackStackEntryCount()==1){
+        if(fragmentManager.getBackStackEntryCount()==0){
             this.finish();
         }
-        else super.onBackPressed();
+        else getSupportFragmentManager().popBackStack();//this single line makes the whole navigation go the right way,on the fragment's screen back button pressed execute this, so simple
     }
 
 }

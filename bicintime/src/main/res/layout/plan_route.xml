@@ -94,7 +94,8 @@
                 android:background="@drawable/background"
                 android:clickable="true"
                 android:orientation="horizontal"
-                android:padding="2dp">
+                android:padding="2dp"
+                android:id="@+id/linearl_end">
 
                 <ImageView
                     android:id="@+id/image_row2"
