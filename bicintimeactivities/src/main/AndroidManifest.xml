@@ -13,8 +13,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:noHistory="true"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,14 +22,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:noHistory="true"
             android:name=".PlanRouteActivity"
-            android:label="@string/title_activity_plan_route" >
+            android:label="@string/title_activity_plan_route"
+            android:noHistory="true" >
         </activity>
         <activity
-            android:noHistory="true"
             android:name=".BaseActivity"
-            android:label="@string/title_activity_base" >
+            android:label="@string/title_activity_base"
+            android:noHistory="true" >
+        </activity>
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"
+            android:noHistory="true">
         </activity>
     </application>
 

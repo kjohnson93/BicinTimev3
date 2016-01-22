@@ -23,7 +23,7 @@ import java.util.ArrayList;
 /**
  * Created by wolf on 1/15/2016.
  */
-public class MapFragment extends Fragment {
+public class MapSFragment extends Fragment {
 
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";

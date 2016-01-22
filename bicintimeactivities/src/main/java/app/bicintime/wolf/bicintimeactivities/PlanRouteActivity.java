@@ -4,14 +4,19 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 
-public class PlanRouteActivity extends BaseActivity {
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CameraPosition;
+
+public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCameraChangeListener {
 
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     public FragmentManager fragmentManager;
     private static final String LOG_TAG = "LOGTRACE";
+    private static final String LOG_MAP = "LOGMAP";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +37,12 @@ public class PlanRouteActivity extends BaseActivity {
     public void onBackPressed() {
 
      super.onBackPressed();
+    }
+
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+
+        Log.d(LOG_MAP, "Entering to onCameraChange with position: " + cameraPosition);
+
     }
 }

@@ -45,7 +45,7 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(PlanRouteFragmentStartA.class.getName());
-                fragmentTransaction.replace(R.id.root_framelayout, new PlanRouteFragmentStartA2());
+                fragmentTransaction.replace(R.id.root_framelayout, new MapFragmentv2());
                 fragmentTransaction.commit();
                 fragmentManager.executePendingTransactions();
 
@@ -109,7 +109,7 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
 
         if(v.getId() == R.id.linearl_choose_onmap){
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.root_framelayout, new PlanRouteFragmentStartA2());
+            fragmentTransaction.replace(R.id.root_framelayout, new MapFragmentv2());
             fragmentTransaction.addToBackStack(PlanRouteFragmentStartA.class.getName());
             fragmentTransaction.commit();
             fragmentManager.executePendingTransactions();

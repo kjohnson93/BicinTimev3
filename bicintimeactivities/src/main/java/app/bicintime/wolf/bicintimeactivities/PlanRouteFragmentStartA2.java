@@ -22,10 +22,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by wolf on 12/31/2015.
  */
-public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMarkerClickListener{
+public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraChangeListener{
 
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";
+    private static final String LOG_MAP = "LOGMAP";
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -65,6 +66,7 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
 
 
 
+
         // create marker
         MarkerOptions marker = new MarkerOptions().position(
                 new LatLng(latitude, longitude)).title("Hello Maps").draggable(true);
@@ -80,6 +82,10 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
                 .target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+
+
+        LatLng center_marker;
+        center_marker = googleMap.getCameraPosition().target;
 
         return v;
 
@@ -130,4 +136,10 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
     }
 
 
+    @Override
+    public void onCameraChange(CameraPosition cameraPosition) {
+
+    Log.d(LOG_MAP, "Entering to onCameraChange with position: " + cameraPosition);
+
+    }
 }
