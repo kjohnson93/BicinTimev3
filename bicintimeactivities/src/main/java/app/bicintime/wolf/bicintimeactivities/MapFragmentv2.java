@@ -3,10 +3,12 @@ package app.bicintime.wolf.bicintimeactivities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +28,7 @@ public class MapFragmentv2 extends Fragment implements OnMapReadyCallback, Googl
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";
     private static final String LOG_MAP = "LOGMAP";
+    private static final String FRAGMENT_KEY = "test";
 
     MapView mMapView;
     private GoogleMap googleMap;
@@ -37,6 +40,26 @@ public class MapFragmentv2 extends Fragment implements OnMapReadyCallback, Googl
 
         MapFragment mapFragment= (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapfragment);
         mapFragment.getMapAsync(this);
+
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        final Button buttonCenterLocation = (Button) rootView.findViewById(R.id.map_setlocation);
+        buttonCenterLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /*
+                Intent intent = new Intent();
+                intent.putExtra(FRAGMENT_KEY, "Location :)");
+                getTargetFragment().onActivityResult(getTargetRequestCode(), getActivity().RESULT_OK, intent);
+
+                for(int i = 0; i<fragmentManager.getBackStackEntryCount(); i++) {
+
+                    Log.d(LOG_TAG, "PRINting backstack: " + fragmentManager.getBackStackEntryAt(i));
+                }*/ //this approach not working, using sharedpreferences instead...
+                fragmentManager.popBackStack(PlanRouteFragment.class.getName(),0); //dunno why pop_back_stack_inclusive is not working as intended
+
+            }
+        });
 
         return rootView;
     }

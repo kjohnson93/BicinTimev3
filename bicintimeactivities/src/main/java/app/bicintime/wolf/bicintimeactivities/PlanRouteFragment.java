@@ -91,6 +91,10 @@ public class PlanRouteFragment extends Fragment{
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager(); //this fragment it doest not exist on the back stack??
                 PlanRouteEndFragment planRouteEndFragment = new PlanRouteEndFragment();
                 planRouteEndFragment.setTargetFragment(PlanRouteFragment.this, 20);
+
+                MapFragmentv2 mapFragmentv2 = new MapFragmentv2();
+                mapFragmentv2.setTargetFragment(PlanRouteFragment.this,30);
+
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.mapframentxml, planRouteEndFragment ); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
                 fragmentTransaction.addToBackStack(PlanRouteFragment.class.getName());
@@ -129,6 +133,21 @@ public class PlanRouteFragment extends Fragment{
             }
 
             TextView textView= (TextView) getView().findViewById(R.id.title_row_2_2);
+            textView.setText(value);
+
+
+        }
+
+
+        if(requestCode == 30 && resultCode == getActivity().RESULT_OK){//this approach not working, using sharedpreferences instead...
+            if(data != null){
+                value = data.getStringExtra("test");
+                if(value != null){
+                    Log.d(LOG_TAG, " Data sent from popbackstack in this case is: " + value);
+                }
+            }
+
+            TextView textView= (TextView) getView().findViewById(R.id.title_row1_2);
             textView.setText(value);
 
 

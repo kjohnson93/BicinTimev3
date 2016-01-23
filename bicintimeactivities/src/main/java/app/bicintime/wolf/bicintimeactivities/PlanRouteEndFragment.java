@@ -38,8 +38,10 @@ public class PlanRouteEndFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                PlanRouteFragmentStartA2 planRouteFragmentStartA2 = new PlanRouteFragmentStartA2();
+
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.root_framelayout, new PlanRouteFragmentStartA2());
+                fragmentTransaction.replace(R.id.root_framelayout, planRouteFragmentStartA2);
                 fragmentTransaction.addToBackStack(PlanRouteEndFragment.class.getName());
                 fragmentTransaction.commit();
                 fragmentManager.executePendingTransactions();

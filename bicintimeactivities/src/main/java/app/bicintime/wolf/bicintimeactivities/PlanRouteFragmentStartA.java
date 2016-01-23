@@ -43,9 +43,13 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
             public void onClick(View v) {
                 Log.d(LOG_TAG, "Entering onClick with view id: " + v.getId());
 
+                MapFragmentv2 mapFragmentv2 = new MapFragmentv2();
+
+                //this approach not working, using sharedpreferences instead...
+                //mapFragmentv2.setTargetFragment(PlanRouteFragmentStartA.this, 30);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.addToBackStack(PlanRouteFragmentStartA.class.getName());
-                fragmentTransaction.replace(R.id.root_framelayout, new MapFragmentv2());
+                fragmentTransaction.replace(R.id.root_framelayout, mapFragmentv2);
                 fragmentTransaction.commit();
                 fragmentManager.executePendingTransactions();
 
