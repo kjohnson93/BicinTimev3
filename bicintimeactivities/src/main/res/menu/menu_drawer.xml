@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/id_drawer_map"
+            android:icon="@drawable/cuenta"
+            android:title="@string/drawer_map" />
+        <item
+            android:id="@+id/id_drawer_plan"
+            android:checked="true"
+            android:icon="@drawable/inicio"
+            android:title="@string/drawer_plan" />
+        <item
+            android:id="@+id/id_drawer_bikes"
+            android:icon="@drawable/categorias"
+            android:title="@string/drawer_bikes" />
+        <item
+            android:id="@+id/id_drawer_settings"
+            android:icon="@drawable/configuracion"
+            android:title="@string/drawer_settings" />
+    </group>
+
+</menu>
