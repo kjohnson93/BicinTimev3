@@ -70,7 +70,7 @@ public class PlanRouteFragment extends Fragment{
                 Log.d(LOG_TAG, "Entering on the clicklistener");
 
 
-
+                /*
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager(); //this fragment it doest not exist on the back stack??
                 PlanRouteFragmentStartA planRouteFragmentStartA = new PlanRouteFragmentStartA();
                 planRouteFragmentStartA.setTargetFragment(PlanRouteFragment.this, FRAGMENT_CODE);
@@ -78,7 +78,12 @@ public class PlanRouteFragment extends Fragment{
                 fragmentTransaction.replace(R.id.mapframentxml, planRouteFragmentStartA ); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
                 fragmentTransaction.addToBackStack(PlanRouteFragment.class.getName());
                 fragmentTransaction.commit();
-                fragmentManager.executePendingTransactions();
+                fragmentManager.executePendingTransactions();*/
+
+                Intent intent = new Intent(getActivity(), PlanRouteStartActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+
 
             }
         });
@@ -96,13 +101,26 @@ public class PlanRouteFragment extends Fragment{
                 mapFragmentv2.setTargetFragment(PlanRouteFragment.this,30);
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.mapframentxml, planRouteEndFragment ); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
+                fragmentTransaction.replace(R.id.mapframentxml, planRouteEndFragment); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
                 fragmentTransaction.addToBackStack(PlanRouteFragment.class.getName());
                 fragmentTransaction.commit();
                 fragmentManager.executePendingTransactions();
 
             }
         });
+
+        Intent intent = getActivity().getIntent();
+
+        if(intent.getExtras()!=null){
+
+            String dataCoord =intent.getStringExtra("current_loc");
+
+            TextView textView = (TextView) rootView.findViewById(R.id.title_row1_2);
+            textView.setText(dataCoord);
+
+
+        }
+
 
         return rootView;
     }

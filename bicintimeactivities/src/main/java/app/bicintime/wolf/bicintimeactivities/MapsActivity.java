@@ -1,13 +1,9 @@
 package app.bicintime.wolf.bicintimeactivities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends BaseActivity {
 
     private static final String FRAGMENT_KEY = "test";
 
@@ -16,37 +12,35 @@ public class MapsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
-        Button buttonMaps = (Button) findViewById(R.id.buttonMapsActivity);
-        buttonMaps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        agregarToolbar();
+        setUpDrawer();
 
 
-            }
-        });
 
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_maps, menu);
-        return true;
-    }
+    public void onBackPressed() {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        Intent intent = getIntent();
+        String previousActivity = intent.getStringExtra("previousActivity");
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if(previousActivity.equals(PlanRouteStartActivity.class.getName())){
+
+            Intent intent1 = new Intent(this, PlanRouteStartActivity.class);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent1);
+
+
         }
 
-        return super.onOptionsItemSelected(item);
+        else if (previousActivity.equals(PlanRouteEndActivity.class.getName())){
+
+            Intent intent1 = new Intent(this, PlanRouteEndActivity.class);
+            intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent1);
+
+        }
+
     }
 }

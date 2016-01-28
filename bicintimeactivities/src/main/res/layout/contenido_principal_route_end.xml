@@ -20,6 +20,6 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/plan_route"></include>
+    <include layout="@layout/plan_route_end"></include>
 
 </LinearLayout>

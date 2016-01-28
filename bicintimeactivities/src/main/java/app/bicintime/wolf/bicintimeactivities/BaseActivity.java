@@ -98,10 +98,13 @@ public class BaseActivity extends AppCompatActivity {
 
             case R.id.id_drawer_map:
                 Intent intent = new Intent(this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
                 break;
             case R.id.id_drawer_plan:
                 Intent intent2 = new Intent(this, PlanRouteActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                intent2.putExtra("Main", 1);
                 startActivity(intent2);
                 break;
             case R.id.id_drawer_bikes:
@@ -114,6 +117,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-super.onBackPressed();
+        Log.d(LOG_TAG, "Entering onBackPressend on baseactivity");
+
+    super.onBackPressed();
     }
 }

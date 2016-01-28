@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,24 @@ public class MapFragmentv2 extends Fragment implements OnMapReadyCallback, Googl
     MapView mMapView;
     private GoogleMap googleMap;
 
+    private static View rootView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.map_fragment_v2, container, false);
+
+
+
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null)
+                parent.removeView(rootView);
+        }
+        try {
+            rootView = inflater.inflate(R.layout.map_fragment_v2, container, false);
+        } catch (InflateException e) {
+        /* map is already there, just return view as it is  */
+        }
 
         MapFragment mapFragment= (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapfragment);
         mapFragment.getMapAsync(this);

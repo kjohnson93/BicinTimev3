@@ -23,18 +23,23 @@
         </activity>
         <activity
             android:name=".PlanRouteActivity"
-            android:label="@string/title_activity_plan_route"
-            android:noHistory="true" >
+            android:label="@string/title_activity_plan_route" >
         </activity>
         <activity
             android:name=".BaseActivity"
-            android:label="@string/title_activity_base"
-            android:noHistory="true" >
+            android:label="@string/title_activity_base" >
         </activity>
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"
-            android:noHistory="true">
+            android:label="@string/title_activity_maps" >
+        </activity>
+        <activity
+            android:name=".PlanRouteStartActivity"
+            android:label="@string/title_activity_plan_route_start" >
+        </activity>
+        <activity
+            android:name=".PlanRouteEndActivity"
+            android:label="@string/title_activity_plan_route_end" >
         </activity>
     </application>
 
