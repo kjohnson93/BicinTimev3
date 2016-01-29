@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.bicintime.wolf.bicintimeactivities" >
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -40,6 +43,10 @@
         <activity
             android:name=".PlanRouteEndActivity"
             android:label="@string/title_activity_plan_route_end" >
+        </activity>
+        <activity
+            android:name=".ClockActivity"
+            android:label="@string/title_activity_clock" >
         </activity>
     </application>
 

@@ -39,5 +39,6 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_plan_route_start">PlanRouteStartActivity</string>
     <string name="title_activity_plan_route_end">PlanRouteEndActivity</string>
+    <string name="title_activity_clock">ClockActivity</string>
 
 </resources>
