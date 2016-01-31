@@ -9,8 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -45,8 +47,17 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
         LinearLayout linearLayout_start = (LinearLayout) findViewById(R.id.linearl_start);
         LinearLayout linearLayoutEnd = (LinearLayout) findViewById(R.id.linearl_end);
+        LinearLayout linearLayoutTime = (LinearLayout) findViewById(R.id.linearl_time);
+        LinearLayout linearLayoutFitness = (LinearLayout) findViewById(R.id.linearl_fitness);
         textViewStart = (TextView) findViewById(R.id.title_row1_2);
         textViewEnd = (TextView) findViewById(R.id.title_row_2_2);
+
+        Button buttonSelectTime = (Button) findViewById(R.id.button_to_select_time);
+
+
+
+        
+
 
 
         linearLayout_start.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +84,60 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
             }
         });
+
+        linearLayoutTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlanRouteActivity.this, ClockActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
+        linearLayoutFitness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlanRouteActivity.this, PlanFitnessActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
+        buttonSelectTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                String startLocation;
+                String endLocation;
+                String loudiness, lanes;
+
+                startLocation = textViewStart.getText().toString().trim();
+                endLocation = textViewEnd.getText().toString().trim();
+
+                ToggleButton toggleButtonLoudiness = (ToggleButton) findViewById(R.id.toggleButton_loudiness);
+                ToggleButton toggleButtonLanes = (ToggleButton) findViewById(R.id.toggleButton_lanes);
+
+                Boolean isLoud = toggleButtonLoudiness.isChecked(); //????
+                Boolean isLanes = toggleButtonLanes.isChecked();
+
+                editor.putString("startLocationToSelectTime", startLocation);
+                editor.putString("endLocationToSelectTime", endLocation);
+                editor.putString("loudinessToSelectTime", isLoud.toString().trim());
+                editor.putString("lanesToSelectTime", isLanes.toString().trim());
+                editor.commit();
+
+                Log.d(LOG_INT,"What I'm sending: " + startLocation + "\n" + endLocation + "\n" + isLoud.toString().trim() + "\n" + isLanes.toString().trim());
+
+                Intent intent = new Intent(PlanRouteActivity.this, PlanSelectTimeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
+
 
 
     }

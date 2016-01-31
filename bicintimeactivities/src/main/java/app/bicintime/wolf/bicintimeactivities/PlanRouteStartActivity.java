@@ -51,7 +51,7 @@ public class PlanRouteStartActivity extends BaseActivity{
 
                 SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("currentLocationStart", textViewStart.getText().toString().toString());
+                editor.putString("currentLocationStart", textViewStart.getText().toString());
                 editor.commit();
 
                 Intent intent_loc = new Intent(PlanRouteStartActivity.this, PlanRouteActivity.class);

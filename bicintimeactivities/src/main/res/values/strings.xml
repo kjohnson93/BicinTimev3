@@ -40,5 +40,8 @@
     <string name="title_activity_plan_route_start">PlanRouteStartActivity</string>
     <string name="title_activity_plan_route_end">PlanRouteEndActivity</string>
     <string name="title_activity_clock">ClockActivity</string>
+    <string name="title_activity_plan_select_time">PlanSelectTimeActivity</string>
+    <string name="title_activity_plan_fitness">PlanFitnessActivity</string>
+    <string name="title_activity_route">RouteActivity</string>
 
 </resources>

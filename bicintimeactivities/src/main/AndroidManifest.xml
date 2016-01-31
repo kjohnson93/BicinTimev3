@@ -48,6 +48,18 @@
             android:name=".ClockActivity"
             android:label="@string/title_activity_clock" >
         </activity>
+        <activity
+            android:name=".PlanSelectTimeActivity"
+            android:label="@string/title_activity_plan_select_time" >
+        </activity>
+        <activity
+            android:name=".PlanFitnessActivity"
+            android:label="@string/title_activity_plan_fitness" >
+        </activity>
+        <activity
+            android:name=".RouteActivity"
+            android:label="@string/title_activity_route" >
+        </activity>
     </application>
 
 </manifest>
