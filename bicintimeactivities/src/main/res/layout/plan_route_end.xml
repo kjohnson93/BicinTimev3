@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:fontFamily="sans-serif"
-                android:text="41,458749/ 2,203144"
+                android:text="41.39464359999999,2.1588451000000077"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginTop="4dp"

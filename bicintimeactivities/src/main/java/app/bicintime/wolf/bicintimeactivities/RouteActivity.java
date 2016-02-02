@@ -21,6 +21,8 @@ public class RouteActivity extends BaseActivity {
 
         getSharedPreferencesData();
 
+        GetBicinTimeJsonData getBicinTimeJsonData = new GetBicinTimeJsonData(startLocation, endLocation, timeSelected);
+
     }
 
     private void getSharedPreferencesData() {
