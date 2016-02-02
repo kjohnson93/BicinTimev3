@@ -56,6 +56,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
             public void onClick(View v) {
 
                 LatLng myCoordinates = googleMap.getCameraPosition().target;
+                Double latitudeLong, longitudeLong;
 
                 Log.d(LOG_MAP, "My center coordinates are: " + myCoordinates + "=)");
 
@@ -72,11 +73,14 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    String latitudeSelected;
-                    String longitudeSelected;
-                    String location;
-
-                    location = myCoordinates.toString();
+                    int maxLength = 10;
+                    String latitude,longitude, location;
+                    //location = myCoordinates.toString();
+                    latitudeLong = myCoordinates.latitude;
+                    latitude = latitudeLong.toString().substring(0, maxLength);
+                    longitudeLong = myCoordinates.longitude;
+                    longitude = longitudeLong.toString().substring(0, maxLength);
+                    location = "" + latitude + " / "+ longitude;
 
                     editor.putString("currentLocationStart", location);
                     editor.commit();
@@ -94,11 +98,14 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                    String latitudeSelected;
-                    String longitudeSelected;
-                    String location;
-
-                    location = myCoordinates.toString();
+                    int maxLength = 10;
+                    String latitude,longitude, location;
+                    //location = myCoordinates.toString();
+                    latitudeLong = myCoordinates.latitude;
+                    latitude = latitudeLong.toString().substring(0, maxLength);
+                    longitudeLong = myCoordinates.longitude;
+                    longitude = longitudeLong.toString().substring(0, maxLength);
+                    location = "" + latitude + " / "+ longitude;
 
                     editor.putString("currentLocationEnd", location);
                     editor.commit();

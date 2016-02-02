@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,12 +53,7 @@ public class PlanRouteFragment extends Fragment{
         LinearLayout linearLayout_start = (LinearLayout) rootView.findViewById(R.id.linearl_start);
         LinearLayout linearLayoutEnd = (LinearLayout) rootView.findViewById(R.id.linearl_end);
 
-        FrameLayout frameLayout = (FrameLayout) rootView.findViewById(R.id.root_framelayout_planroute);
 
-        if(frameLayout!=null)
-        Log.d(LOG_TAG,"FrameLayout content is: " + frameLayout.toString());
-
-        final int FRAGMENT_CODE = 10;
 
 
         linearLayout_start.setOnClickListener(new View.OnClickListener() {

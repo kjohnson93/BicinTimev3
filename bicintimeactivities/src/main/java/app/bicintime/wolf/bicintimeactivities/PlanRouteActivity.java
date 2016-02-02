@@ -30,9 +30,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
     private static final String default_endDate = "Choose a Destination";
 
 
-    private String pause_dateStart;
-    private String pause_dateEnd;
-    String dataCoordStart, dataCoordEnd;
+    private ToggleButton toggleButtonLoudiness, toggleButtonLanes;
 
     TextView textViewStart, textViewEnd;
 
@@ -45,6 +43,8 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         setUpDrawer();
 
 
+
+
         LinearLayout linearLayout_start = (LinearLayout) findViewById(R.id.linearl_start);
         LinearLayout linearLayoutEnd = (LinearLayout) findViewById(R.id.linearl_end);
         LinearLayout linearLayoutTime = (LinearLayout) findViewById(R.id.linearl_time);
@@ -54,9 +54,10 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
         Button buttonSelectTime = (Button) findViewById(R.id.button_to_select_time);
 
+        setUpToggleButon();
 
 
-        
+
 
 
 
@@ -129,7 +130,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
                 editor.putString("lanesToSelectTime", isLanes.toString().trim());
                 editor.commit();
 
-                Log.d(LOG_INT,"What I'm sending: " + startLocation + "\n" + endLocation + "\n" + isLoud.toString().trim() + "\n" + isLanes.toString().trim());
+                Log.d(LOG_INT, "What I'm sending: " + startLocation + "\n" + endLocation + "\n" + isLoud.toString().trim() + "\n" + isLanes.toString().trim());
 
                 Intent intent = new Intent(PlanRouteActivity.this, PlanSelectTimeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -137,6 +138,54 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
             }
         });
 
+
+
+
+    }
+
+    //Click Listener inside this method ??? good or not??. We let the user choose the toggleButton state as he desires..
+    private void setUpToggleButon() {
+
+        toggleButtonLoudiness = (ToggleButton) findViewById(R.id.toggleButton_loudiness);
+        toggleButtonLanes = (ToggleButton) findViewById(R.id.toggleButton_lanes);
+
+        SharedPreferences sharedPrefs = getSharedPreferences("MyData", MODE_PRIVATE);
+        toggleButtonLoudiness.setChecked(sharedPrefs.getBoolean("Loudiness", false));
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyData" , MODE_PRIVATE);
+        toggleButtonLanes.setChecked(sharedPreferences.getBoolean("Lanes", false));
+
+
+        toggleButtonLoudiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (toggleButtonLoudiness.isChecked()) {
+                    SharedPreferences.Editor editor = getSharedPreferences("MyData", MODE_PRIVATE).edit();
+                    editor.putBoolean("Loudiness", true);
+                    editor.commit();
+                } else {
+                    SharedPreferences.Editor editor = getSharedPreferences("MyData", MODE_PRIVATE).edit();
+                    editor.putBoolean("Loudiness", false);
+                    editor.commit();
+                }
+            }
+        });
+
+        toggleButtonLanes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(toggleButtonLanes.isChecked()){
+                    SharedPreferences.Editor editor = getSharedPreferences("MyData", MODE_PRIVATE).edit();
+                    editor.putBoolean("Lanes", true);
+                    editor.commit();
+                }
+                else {
+                    SharedPreferences.Editor editor = getSharedPreferences("MyData", MODE_PRIVATE).edit();
+                    editor.putBoolean("Lanes", false);
+                    editor.commit();
+                }
+            }
+        });
 
 
 
@@ -177,31 +226,11 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         Log.d(LOG_INT, "Setting end textview with: " + endLocationData);
         textViewEnd.setText(endLocationData.toString().trim());
 
-
-
-
-        /*
-        if(textViewStart.getText().toString().trim().equals(default_startDate)){
-
-            editor.remove("currentLocationStart");
-            editor.commit();
-
-        }
-
-        if(textViewEnd.getText().toString().trim().equals(default_endDate)){
-
-            editor.remove("currentLocationEnd");
-            editor.commit();
-        }*/
-
-
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-
-        Log.d(LOG_INT, "OnRestoreInstanceState being called");
-        super.onRestoreInstanceState(savedInstanceState);
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override

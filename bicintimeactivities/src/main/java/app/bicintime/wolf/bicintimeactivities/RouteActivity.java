@@ -14,8 +14,8 @@ public class RouteActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_route);
 
+        setContentView(R.layout.activity_route);
         agregarToolbar();
         setUpDrawer();
 
