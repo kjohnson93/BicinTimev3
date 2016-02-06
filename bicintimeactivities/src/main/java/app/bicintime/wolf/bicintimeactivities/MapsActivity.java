@@ -189,6 +189,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED //This is ok, but i will have to figure it out how to ask a user permission ON RUNTIME
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) { //also why ContextCompat instead of ActivityCompat ??
+            //We have to request location, otherwise it will throw a null pointer because no app has requested coordinates
+
 
             Log.d(LOG_MAP, "Entering checkSelfPermission");
 
