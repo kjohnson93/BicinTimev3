@@ -36,7 +36,7 @@ public class GetMapDirectionsJsonData extends GetRawData {
 
         //The URI, Hardcoded for now.
         final LatLng WTC = new LatLng(41.372203, 2.180496);
-        mDestinationUri = Uri.parse("https://maps.googleapis.com/maps/api/directions/json?origin=41.401845,2.181116&destination=41.372203,2.180496&key=AIzaSyCgKXy1mAqFeLr0H-NgVCCTEb3qimgQnWA");
+        mDestinationUri = Uri.parse("https://maps.googleapis.com/maps/api/directions/json?mode=bicycling&origin=41.401845,2.181116&destination=41.372203,2.180496&key=AIzaSyCgKXy1mAqFeLr0H-NgVCCTEb3qimgQnWA");
 
         Log.d(LOG_DLOAD, "Getting into getMap... constructor..");
 
@@ -75,6 +75,59 @@ public class GetMapDirectionsJsonData extends GetRawData {
 
     }
 
+
+    private ArrayList<LatLng> decodePoly(String encoded) {
+
+        Log.i("Location", "String received: "+encoded);
+        ArrayList<LatLng> poly = new ArrayList<LatLng>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+
+            LatLng p = new LatLng((((double) lat / 1E5)),(((double) lng / 1E5)));
+            poly.add(p);
+        }
+
+        for(int i=0;i<poly.size();i++){
+            Log.i("Location", "Point sent: Latitude: "+poly.get(i).latitude+" Longitude: "+poly.get(i).longitude);
+        }
+        return poly;
+    }
+
+    private ArrayList<Steps> generateSteps(ArrayList<LatLng> arrayLatLng){
+        ArrayList<Steps> steps = new ArrayList<Steps>();
+
+        // each step is composed by two points (starting and ending)
+        for(int i = 0; i < arrayLatLng.size() - 1; i++){
+            steps.add(
+                    new Steps(arrayLatLng.get(i).latitude,
+                            arrayLatLng.get(i).longitude,
+                            arrayLatLng.get(i + 1).latitude,
+                            arrayLatLng.get(i + 1).longitude));
+        }
+
+        return steps;
+    }
+
     //This method is intended to being called after we get the data from GetRawData, so its called on PostExecute. It is responsible for json parsing process.
     public void processResult() {
 
@@ -110,7 +163,7 @@ public class GetMapDirectionsJsonData extends GetRawData {
 
             List<JSONObject> stepJsonObjects;
 
-            for (int i = 0; i < jsonSteps.length(); i++) {
+           /* for (int i = 0; i < jsonSteps.length(); i++) {
 
                 JSONObject stepObject = jsonSteps.getJSONObject(i);
 
@@ -130,7 +183,13 @@ public class GetMapDirectionsJsonData extends GetRawData {
                 Log.d(LOG_DLOAD, "SIZE of steps in GetMapDirectionsJsonData is: " + stepsArrayList.size());
 
 
-            }
+            }*/
+
+            // get all encoded points and generate the array to draw the polyline
+            JSONObject points = routes.getJSONObject("overview_polyline");
+            ArrayList<LatLng> allPoints = decodePoly(points.getString("points"));
+            stepsArrayList.addAll(generateSteps(allPoints));
+
 
             Log.d(LOG_DLOAD, "Let's see how many elements exists inside this array: " + jsonRoutes.length());
             Log.d(LOG_DLOAD, "Now let's see how many elements exist inside legs array:" + jsonLegs.length());

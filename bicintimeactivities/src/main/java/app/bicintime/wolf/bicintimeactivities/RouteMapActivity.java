@@ -175,6 +175,7 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
                 Log.d(LOG_DLOAD, "Size of array onPostExecute ProcessData is: " + stepsArrayList.size());
                 //now it's working
 
+                ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
 
                 //calling this on Post execute, is right?
                 for (int i = 0; i < stepsArrayList.size(); i++) {
@@ -185,8 +186,10 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
                             .width(5)
                             .color(Color.RED));
 
-                }
+                    // for debugging purposes: draw a marker at the end of each step
+                    // googleMap.addMarker(new MarkerOptions().position(new LatLng(stepsArrayList.get(i).getStartLocationStep().latitude, stepsArrayList.get(i).getStartLocationStep().longitude)));
 
+                }
 
             }
         }
