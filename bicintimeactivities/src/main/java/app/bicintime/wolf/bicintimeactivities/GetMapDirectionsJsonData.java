@@ -16,6 +16,7 @@ import java.util.List;
  * Created by wolf on 2/2/2016.
  */
 
+
 //This class will make the json parsing to extract the data from the json files.
 public class GetMapDirectionsJsonData extends GetRawData {
 
@@ -238,6 +239,10 @@ public class GetMapDirectionsJsonData extends GetRawData {
             //return super.doInBackground(params);
             String[] par = {mDestinationUri.toString()};
             return super.doInBackground(par);
+        }
+
+        private void getTest(){
+            // nothing
         }
     }
 }
