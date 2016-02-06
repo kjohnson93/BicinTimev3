@@ -138,6 +138,8 @@ public class GetMapDirectionsJsonData extends GetRawData {
             return;
         }
 
+
+         ////
         Log.d(LOG_DLOAD, "After if on ProcessResult");
 
         /*
@@ -211,6 +213,11 @@ public class GetMapDirectionsJsonData extends GetRawData {
     public ArrayList<Steps> getSteps() {
 
         return stepsArrayList;
+    }
+
+    private void testMerge(){
+
+        
     }
 
 
