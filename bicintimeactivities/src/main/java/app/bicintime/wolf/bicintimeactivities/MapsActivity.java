@@ -8,6 +8,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -21,12 +22,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 public class MapsActivity extends BaseActivity implements OnMapReadyCallback, LocationListener {
 
     private static final String FRAGMENT_KEY = "test";
     private GoogleMap googleMap;
 
     private static final String LOG_MAP = "LOGMAP";
+
+    LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +147,24 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
     }
 
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -171,13 +194,15 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
             Log.d(LOG_MAP, "Entering checkSelfPermission");
 
-            Location location = locationManager.getLastKnownLocation(provider);
-
-            Log.d(LOG_MAP, "My location is: " + "\n Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude());
+            Location location = getLastKnownLocation();
 
             if (location != null) {
                 onLocationChanged(location);
+                Log.d(LOG_MAP, "My location is: " + "\n Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude());
+            }else{
+                throw new RuntimeException("It was not possible to get the location");
             }
+
             locationManager.requestLocationUpdates(provider, 20000, 0, this);
 
 
