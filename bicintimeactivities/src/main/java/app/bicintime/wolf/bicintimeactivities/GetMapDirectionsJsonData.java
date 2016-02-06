@@ -38,6 +38,7 @@ public class GetMapDirectionsJsonData extends GetRawData {
         //The URI, Hardcoded for now.
         final LatLng WTC = new LatLng(41.372203, 2.180496);
         mDestinationUri = Uri.parse("https://maps.googleapis.com/maps/api/directions/json?mode=bicycling&origin=41.401845,2.181116&destination=41.372203,2.180496&key=AIzaSyCgKXy1mAqFeLr0H-NgVCCTEb3qimgQnWA");
+        //https://maps.googleapis.com/maps/api/directions/json?origin=Adelaide,SA&destination=Adelaide,SA&waypoints=optimize:true|Barossa+Valley,SA|Clare,SA|Connawarra,SA|McLaren+Vale,SA&key=YOUR_API_KEY
 
         Log.d(LOG_DLOAD, "Getting into getMap... constructor..");
 
