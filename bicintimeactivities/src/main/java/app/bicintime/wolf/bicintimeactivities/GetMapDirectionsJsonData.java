@@ -236,6 +236,7 @@ public class GetMapDirectionsJsonData extends GetRawData {
 
         private void getTest(){
             // nothing
+            int i = 10;
         }
     }
 }
