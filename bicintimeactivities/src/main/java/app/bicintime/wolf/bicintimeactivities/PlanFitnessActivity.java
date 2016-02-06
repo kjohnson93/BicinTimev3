@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class PlanFitnessActivity extends BaseActivity{
+public class PlanFitnessActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class PlanFitnessActivity extends BaseActivity{
         setUpDrawer();
 
 
-        SeekBar seekBar = (SeekBar)findViewById(R.id.seekbar);
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekbar);
         seekBar.setProgress(0);
         seekBar.incrementProgressBy(10);
         seekBar.setMax(200);
@@ -24,13 +24,14 @@ public class PlanFitnessActivity extends BaseActivity{
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
-            TextView seekBarValue = (TextView)findViewById(R.id.seekbarvalue);
+            TextView seekBarValue = (TextView) findViewById(R.id.seekbarvalue);
 
 
             int stepSize = 50;
+
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                progress = (progress/stepSize) * stepSize;
+                progress = (progress / stepSize) * stepSize;
                 seekBar.setProgress(progress);
                 seekBarValue.setText(progress + "");
             }

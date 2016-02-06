@@ -22,7 +22,6 @@ public class MainActivity extends BaseActivity {
         setUpDrawer();
 
 
-
     }
 
     @Override

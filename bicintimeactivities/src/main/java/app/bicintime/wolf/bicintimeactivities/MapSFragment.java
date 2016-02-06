@@ -56,12 +56,11 @@ public class MapSFragment extends Fragment {
 
         final LatLng WTC = new LatLng(41.372203, 2.180496);
 
-        double latitude_array[]={41.401845, 41.395149, 41.398755, 41.388452 };
-        double longitude_array[]= {2.181116, 2.171503, 2.195879, 2.196050};
+        double latitude_array[] = {41.401845, 41.395149, 41.398755, 41.388452};
+        double longitude_array[] = {2.181116, 2.171503, 2.195879, 2.196050};
 
 
         googleMap = mMapView.getMap();
-
 
 
         MarkerOptions markerOptions[];
@@ -69,7 +68,7 @@ public class MapSFragment extends Fragment {
         ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
 
 
-        for (int i= 0; i<latitude_array.length; i++){
+        for (int i = 0; i < latitude_array.length; i++) {
 
             markers.add(new MarkerOptions().position(
                     new LatLng(latitude_array[i], longitude_array[i])).title("Hello Maps"));
@@ -80,7 +79,6 @@ public class MapSFragment extends Fragment {
             googleMap.addMarker(markers.get(i));
 
 
-
         }
 
 
@@ -88,9 +86,6 @@ public class MapSFragment extends Fragment {
                 .target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
-
-
-
 
 
         return rootView;
@@ -126,7 +121,7 @@ public class MapSFragment extends Fragment {
         mMapView.onLowMemory();
     }
 
-    public void onResumeFragment(){
+    public void onResumeFragment() {
 
         Log.d("BACK", "Fuck you, Reloading PlanA2");
 

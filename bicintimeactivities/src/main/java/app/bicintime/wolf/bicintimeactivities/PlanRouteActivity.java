@@ -43,8 +43,6 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         setUpDrawer();
 
 
-
-
         LinearLayout linearLayout_start = (LinearLayout) findViewById(R.id.linearl_start);
         LinearLayout linearLayoutEnd = (LinearLayout) findViewById(R.id.linearl_end);
         LinearLayout linearLayoutTime = (LinearLayout) findViewById(R.id.linearl_time);
@@ -55,10 +53,6 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         Button buttonSelectTime = (Button) findViewById(R.id.button_to_select_time);
 
         setUpToggleButon();
-
-
-
-
 
 
         linearLayout_start.setOnClickListener(new View.OnClickListener() {
@@ -139,8 +133,6 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         });
 
 
-
-
     }
 
     //Click Listener inside this method ??? good or not??. We let the user choose the toggleButton state as he desires..
@@ -152,7 +144,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         SharedPreferences sharedPrefs = getSharedPreferences("MyData", MODE_PRIVATE);
         toggleButtonLoudiness.setChecked(sharedPrefs.getBoolean("Loudiness", false));
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyData" , MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
         toggleButtonLanes.setChecked(sharedPreferences.getBoolean("Lanes", false));
 
 
@@ -174,19 +166,17 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         toggleButtonLanes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(toggleButtonLanes.isChecked()){
+                if (toggleButtonLanes.isChecked()) {
                     SharedPreferences.Editor editor = getSharedPreferences("MyData", MODE_PRIVATE).edit();
                     editor.putBoolean("Lanes", true);
                     editor.commit();
-                }
-                else {
+                } else {
                     SharedPreferences.Editor editor = getSharedPreferences("MyData", MODE_PRIVATE).edit();
                     editor.putBoolean("Lanes", false);
                     editor.commit();
                 }
             }
         });
-
 
 
     }
@@ -202,7 +192,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
         Intent intent = getIntent();
 
-        if(intent.getIntExtra("Main", 0) == 1){
+        if (intent.getIntExtra("Main", 0) == 1) {
 
             Log.d(LOG_INT, "Coming from main activity");
 
@@ -220,7 +210,6 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
         Log.d(LOG_INT, "Setting Start textview with: " + startLocationData);
         textViewStart.setText(startLocationData.toString().trim());
-
 
 
         Log.d(LOG_INT, "Setting end textview with: " + endLocationData);

@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * Created by wolf on 12/31/2015.
  */
-public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraChangeListener{
+public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnCameraChangeListener {
 
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";
@@ -49,11 +49,11 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
-    }
+        }
 
 
-        double latitude_array[]={41.401845, 41.395149, 41.398755, 41.388452 };
-        double longitude_array[]= {2.181116, 2.171503, 2.195879, 2.196050};
+        double latitude_array[] = {41.401845, 41.395149, 41.398755, 41.388452};
+        double longitude_array[] = {2.181116, 2.171503, 2.195879, 2.196050};
 
 
         googleMap = mMapView.getMap();
@@ -62,9 +62,6 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
         double longitude = 2.180496;
 
         final LatLng WTC = new LatLng(41.372203, 2.180496);
-
-
-
 
 
         // create marker
@@ -120,7 +117,7 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
         mMapView.onLowMemory();
     }
 
-    public void onResumeFragment(){
+    public void onResumeFragment() {
 
         Log.d("BACK", "Fuck you, Reloading PlanA2");
 
@@ -131,7 +128,6 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
     public boolean onMarkerClick(Marker marker) {
 
 
-
         return false;
     }
 
@@ -139,7 +135,7 @@ public class PlanRouteFragmentStartA2 extends Fragment implements GoogleMap.OnMa
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
 
-    Log.d(LOG_MAP, "Entering to onCameraChange with position: " + cameraPosition);
+        Log.d(LOG_MAP, "Entering to onCameraChange with position: " + cameraPosition);
 
     }
 }

@@ -3,23 +3,19 @@ package app.bicintime.wolf.bicintimeactivities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
+//On this activity, we force the user to pick the time
 public class PlanSelectTimeActivity extends BaseActivity {
 
 
-    RecyclerView recyclerView;
-    RecyclerViewTimeAdapter timeAdapter;
     private static final String LOG_TIME = "LOGTIME";
     private static final String DEFAULT = "Default text";
     private String startLocation, endLocation, loudiness, lanes;
@@ -34,20 +30,16 @@ public class PlanSelectTimeActivity extends BaseActivity {
         agregarToolbar();
         setUpDrawer();
 
-        //recyclerView = (RecyclerView) findViewById(R.id.recyclerViewTime);
-        //timeAdapter = new RecyclerViewTimeAdapter(this, getData());
-
-        //recyclerView.setAdapter(timeAdapter);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         setUpTime();
         getSharedPreferencesData();
 
+        //We are getting the references into java object code from the xml layout or display file
         LinearLayout linearLayoutNow = (LinearLayout) findViewById(R.id.linearl_now);
         LinearLayout linearLayoutHalfHour = (LinearLayout) findViewById(R.id.linearl_halfhour);
         LinearLayout linearLayoutOneHour = (LinearLayout) findViewById(R.id.linearl_onehour);
         LinearLayout linearLayoutCustom = (LinearLayout) findViewById(R.id.linearl_custom);
 
+        //Here we define what happens if we click this section of the screen. In this case, pass the time info along the previous data to the Route Map Screen
         linearLayoutNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,16 +51,17 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("endLocationToRoute", endLocation);
                 editor.putString("loudinessToRoute", loudiness);
                 editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute",timeNow );
+                editor.putString("timeToRoute", timeNow);
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteActivity.class);
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
 
             }
         });
 
+        //In this case, pass the time info along the previous data to the Route Map Screen
         linearLayoutHalfHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,15 +73,16 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("endLocationToRoute", endLocation);
                 editor.putString("loudinessToRoute", loudiness);
                 editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute",timeHalfHour );
+                editor.putString("timeToRoute", timeHalfHour);
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteActivity.class);
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
 
+        //In this case, pass the time info along the previous data to the Route Map Screen
         linearLayoutOneHour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,15 +94,16 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("endLocationToRoute", endLocation);
                 editor.putString("loudinessToRoute", loudiness);
                 editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute",timeOneHour );
+                editor.putString("timeToRoute", timeOneHour);
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteActivity.class);
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
 
+        //In this case, pass the time info along the previous data to the Route Map Screen
         linearLayoutCustom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,10 +115,10 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("endLocationToRoute", endLocation);
                 editor.putString("loudinessToRoute", loudiness);
                 editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute",timeNow );  //TODO Make a dialog fragment to choose an specific time. !
+                editor.putString("timeToRoute", timeNow);  //TODO Make a dialog fragment to choose an specific time. !
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteActivity.class);
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
 
@@ -131,13 +126,9 @@ public class PlanSelectTimeActivity extends BaseActivity {
         });
 
 
-
-
-
-
-
     }
 
+    //With this method, we get the data coming from PlanRoute screen
     private void getSharedPreferencesData() {
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
@@ -154,11 +145,9 @@ public class PlanSelectTimeActivity extends BaseActivity {
         editor.commit();
 
 
-
-
-
     }
 
+    //With this method we do some parsing to get a miliseconds timestamp format for our four options to choose on the screen.
     private void setUpTime() {
 
         TextView textViewNow, textViewHalfHour, textViewOneHour, textViewCustom;
@@ -173,23 +162,21 @@ public class PlanSelectTimeActivity extends BaseActivity {
         Date date = c.getTime();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        timeNow = simpleDateFormat.format(date);
+        //timeNow = simpleDateFormat.format(date);
 
-        Calendar calHalfHour = Calendar.getInstance();
-        calHalfHour.setTime(date);
-        calHalfHour.add(Calendar.MINUTE, 30);
-        timeHalfHour = simpleDateFormat.format(calHalfHour.getTime());
+        Long nowLong = System.currentTimeMillis();
 
-        Calendar calOneHour = Calendar.getInstance();
-        calOneHour.setTime(date);
-        calOneHour.add(Calendar.HOUR, 1);
-        timeOneHour = simpleDateFormat.format(calOneHour.getTime());
+        timeNow = nowLong.toString();
+
+        final Long halfHourLong = Long.valueOf((30 * 60) * 1000);
+        Long timeHalfHourLong = nowLong + halfHourLong;
+        timeHalfHour = timeHalfHourLong.toString();
+
+        final Long oneHourLong = Long.valueOf((60 * 60) * 1000);
+        Long timeOneHourLong = nowLong + oneHourLong;
+        timeOneHour = timeOneHourLong.toString();
 
         Log.d(LOG_TIME, "Time formmatted to: " + timeNow + "\n" + "Plus half an hour: " + timeHalfHour);
-
-
-
-
 
         textViewNow.setText("Now");
         textViewHalfHour.setText("In half an hour: " + timeHalfHour);
@@ -198,52 +185,7 @@ public class PlanSelectTimeActivity extends BaseActivity {
 
     }
 
-    public List<Time> getData() {
-
-        List<Time> timeList = new ArrayList<>();
-
-
-        Calendar c;
-        c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR);
-        int minute = c.get(Calendar.MINUTE);
-
-        Time now = new Time(hour,minute);
-
-        Time halfHour = new Time(hour+ 0, minute + 30);
-        Time oneHour = new Time(hour+1, minute+ 0);
-        Time custom = new Time(0,0);
-
-        timeList.add(now);
-        timeList.add(halfHour);
-        timeList.add(oneHour);
-        timeList.add(custom);
-
-        return timeList;
-
-
-    }
-
-    class Time {
-
-        int hour, minute;
-
-        public Time(int hour, int minute) {
-
-            this.hour = hour;
-            if(minute+30>60){
-                this.hour++;
-                this.minute = this.minute -60;
-
-            }
-            else this.minute = minute;
-
-
-
-        }
-
-    }
-
+    //With thise method, we can navigate back to the previous screen
     @Override
     public void onBackPressed() {
 

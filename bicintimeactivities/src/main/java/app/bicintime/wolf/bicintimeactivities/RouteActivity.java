@@ -5,10 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+//Deprecated class
 public class RouteActivity extends BaseActivity {
-
+    private static final String LOG_DLOAD = "LOGDOWNLOAD";
     private static final String DEFAULT = "Default text";
-    private static final String LOG_TIME =  "LOGTIME";
+    private static final String LOG_TIME = "LOGTIME";
     String startLocation, endLocation, loudiness, lanes, timeSelected;
 
     @Override
@@ -21,7 +22,8 @@ public class RouteActivity extends BaseActivity {
 
         getSharedPreferencesData();
 
-        GetBicinTimeJsonData getBicinTimeJsonData = new GetBicinTimeJsonData(startLocation, endLocation, timeSelected);
+        //GetBicinTimeJsonData getBicinTimeJsonData = new GetBicinTimeJsonData(startLocation, endLocation, timeSelected);
+        //getBicinTimeJsonData.execute();
 
     }
 
@@ -35,7 +37,7 @@ public class RouteActivity extends BaseActivity {
         timeSelected = sharedPreferences.getString("timeToRoute", DEFAULT);
 
 
-        Log.d(LOG_TIME, "Im getting the next data (RouteActivity): " + startLocation + "\n" + endLocation + "\n" + loudiness + "\n" + lanes + "\n" + timeSelected);
+        Log.d(LOG_DLOAD, "Im getting the next data (RouteActivity): " + startLocation + "\n" + endLocation + "\n" + loudiness + "\n" + lanes + "\n" + timeSelected);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();

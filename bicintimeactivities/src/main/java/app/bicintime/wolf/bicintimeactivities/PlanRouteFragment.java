@@ -23,13 +23,12 @@ import java.util.List;
 
 //Fragment class that shows the main plan route section of the app, it uses several things as a recycler view and sharedpreferences to read and save things
 
-public class PlanRouteFragment extends Fragment{
+public class PlanRouteFragment extends Fragment {
 
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";
     private static final String DEFAULT = "Choose a Start";
-    private static final String DEFAULT_END = "Choose a destination" ;
-
+    private static final String DEFAULT_END = "Choose a destination";
 
 
     RecyclerView recyclerView, recyclerView2;
@@ -52,8 +51,6 @@ public class PlanRouteFragment extends Fragment{
 
         LinearLayout linearLayout_start = (LinearLayout) rootView.findViewById(R.id.linearl_start);
         LinearLayout linearLayoutEnd = (LinearLayout) rootView.findViewById(R.id.linearl_end);
-
-
 
 
         linearLayout_start.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +89,7 @@ public class PlanRouteFragment extends Fragment{
                 planRouteEndFragment.setTargetFragment(PlanRouteFragment.this, 20);
 
                 MapFragmentv2 mapFragmentv2 = new MapFragmentv2();
-                mapFragmentv2.setTargetFragment(PlanRouteFragment.this,30);
+                mapFragmentv2.setTargetFragment(PlanRouteFragment.this, 30);
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.mapframentxml, planRouteEndFragment); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
@@ -105,9 +102,9 @@ public class PlanRouteFragment extends Fragment{
 
         Intent intent = getActivity().getIntent();
 
-        if(intent.getExtras()!=null){
+        if (intent.getExtras() != null) {
 
-            String dataCoord =intent.getStringExtra("current_loc");
+            String dataCoord = intent.getStringExtra("current_loc");
 
             TextView textView = (TextView) rootView.findViewById(R.id.title_row1_2);
             textView.setText(dataCoord);
@@ -125,46 +122,45 @@ public class PlanRouteFragment extends Fragment{
         Log.d(LOG_TAG, "Entering onActivityResult");
         String value = "";
 
-        if(requestCode == 10 && resultCode == getActivity().RESULT_OK) {
-            if(data != null) {
-               value = data.getStringExtra("test");
-                if(value != null) {
+        if (requestCode == 10 && resultCode == getActivity().RESULT_OK) {
+            if (data != null) {
+                value = data.getStringExtra("test");
+                if (value != null) {
                     Log.d(LOG_TAG, "Data sent from popbackstack call is: " + value);
                 }
             }
-            TextView textView= (TextView) getView().findViewById(R.id.title_row1_2);
+            TextView textView = (TextView) getView().findViewById(R.id.title_row1_2);
             textView.setText(value);
         }
 
-        if(requestCode == 20 && resultCode == getActivity().RESULT_OK){
-            if(data != null){
+        if (requestCode == 20 && resultCode == getActivity().RESULT_OK) {
+            if (data != null) {
                 value = data.getStringExtra("test");
-                if(value != null){
+                if (value != null) {
                     Log.d(LOG_TAG, " Data sent from popbackstack in this case is: " + value);
                 }
             }
 
-            TextView textView= (TextView) getView().findViewById(R.id.title_row_2_2);
+            TextView textView = (TextView) getView().findViewById(R.id.title_row_2_2);
             textView.setText(value);
 
 
         }
 
 
-        if(requestCode == 30 && resultCode == getActivity().RESULT_OK){//this approach not working, using sharedpreferences instead...
-            if(data != null){
+        if (requestCode == 30 && resultCode == getActivity().RESULT_OK) {//this approach not working, using sharedpreferences instead...
+            if (data != null) {
                 value = data.getStringExtra("test");
-                if(value != null){
+                if (value != null) {
                     Log.d(LOG_TAG, " Data sent from popbackstack in this case is: " + value);
                 }
             }
 
-            TextView textView= (TextView) getView().findViewById(R.id.title_row1_2);
+            TextView textView = (TextView) getView().findViewById(R.id.title_row1_2);
             textView.setText(value);
 
 
         }
-
 
 
     }
@@ -209,13 +205,7 @@ public class PlanRouteFragment extends Fragment{
         Log.d(LOG_TAG, "Entering onActivityCreated PlanRouteFragment");
 
 
-
-       // Log.d(LOG_TAG, "LinearLayout content is: " + linearLayout_start.toString());
-
-
-
-
-
+        // Log.d(LOG_TAG, "LinearLayout content is: " + linearLayout_start.toString());
 
 
     }
@@ -247,13 +237,12 @@ public class PlanRouteFragment extends Fragment{
 
         }
 
-        return  data;
+        return data;
 
 
     }
 
-    public static List<Information> getData2(){
-
+    public static List<Information> getData2() {
 
 
         List<Information> data = new ArrayList<>();
@@ -278,14 +267,12 @@ public class PlanRouteFragment extends Fragment{
 
         }
 
-        return  data;
-
+        return data;
 
 
     }
 
     //BACK BUTTON MAKE APP TO DESTROY /CLOSE
-
 
 
 }

@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class PlanRouteStartActivity extends BaseActivity{
+public class PlanRouteStartActivity extends BaseActivity {
 
-    private static final String LOG_INT ="LOGINTENT";
+    private static final String LOG_INT = "LOGINTENT";
 
     private static final String LOG_TAG = "LOGTRACE";
 
@@ -25,10 +25,9 @@ public class PlanRouteStartActivity extends BaseActivity{
 
         LinearLayout linearlChooseOnMap, linearlCurrentLoc;
 
-        linearlChooseOnMap = (LinearLayout)findViewById(R.id.linearl_choose_onmap);
-        linearlCurrentLoc= (LinearLayout)findViewById(R.id.linearl_current_location);
+        linearlChooseOnMap = (LinearLayout) findViewById(R.id.linearl_choose_onmap);
+        linearlCurrentLoc = (LinearLayout) findViewById(R.id.linearl_current_location);
         final TextView textViewStart = (TextView) findViewById(R.id.textview_coordinates_current);
-
 
 
         linearlChooseOnMap.setOnClickListener(new View.OnClickListener() {

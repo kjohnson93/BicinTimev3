@@ -68,7 +68,6 @@ public class PlanRouteEndFragment extends Fragment {
         });
 
 
-
         return rootView;
     }
 

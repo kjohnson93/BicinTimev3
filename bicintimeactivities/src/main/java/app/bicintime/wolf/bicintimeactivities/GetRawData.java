@@ -14,8 +14,12 @@ import java.net.URL;
  * Created by wolf on 2/2/2016.
  */
 
-enum DownloadStatus {IDLE, PROCESSING, NOT_INITIALISED, FAILED_OR_EMPTY, OK};
+//these are to have more reliable download process, so we can debug and find out what went wrong in case of download failure.
+enum DownloadStatus {
+    IDLE, PROCESSING, NOT_INITIALISED, FAILED_OR_EMPTY, OK
+};
 
+//This class will get the data from every file that it receives as input
 public class GetRawData {
 
     private static final String LOG_DLOAD = "LOGDOWNLOAD";
@@ -23,19 +27,22 @@ public class GetRawData {
     private String mData;
     private DownloadStatus mDownloadStatus;
 
-    public GetRawData(String url){
+    //constructor
+    public GetRawData(String url) {
 
         this.mRawUrl = url;
-        this.mDownloadStatus= DownloadStatus.IDLE;
+        this.mDownloadStatus = DownloadStatus.IDLE;
 
     }
 
+    //in case of we need resetting the process.
     public void reset() {
         this.mDownloadStatus = DownloadStatus.IDLE;
         this.mRawUrl = null;
         this.mData = null;
     }
 
+    //this is intended to be called when we get all the data
     public String getmData() {
         return mData;
     }
@@ -48,7 +55,8 @@ public class GetRawData {
         this.mRawUrl = mRawUrl;
     }
 
-    public void execute(){
+    //This method will prepare and execute our asynctask or "thread" to run in background and download the file data.
+    public void execute() {
 
         this.mDownloadStatus = DownloadStatus.PROCESSING;
         DownloadRawData downloadRawData = new DownloadRawData();
@@ -56,14 +64,16 @@ public class GetRawData {
     }
 
 
-    public class DownloadRawData extends AsyncTask<String, Void, String>{
+    //Here's our thread that will run in background to read every line of the uri file and then will store it in a variable.
+    public class DownloadRawData extends AsyncTask<String, Void, String> {
 
+        //this method is called when doInBackground finishes, alaways.
         @Override
         protected void onPostExecute(String result) {
             mData = result;
-            Log.d(LOG_DLOAD, "Data returned was: " + mData);
-            if(mData == null) {
-                if(mRawUrl == null) {
+            //Log.d(LOG_DLOAD, "Data returned was: " + mData);
+            if (mData == null) {
+                if (mRawUrl == null) {
                     mDownloadStatus = DownloadStatus.NOT_INITIALISED;
                 } else {
                     mDownloadStatus = DownloadStatus.FAILED_OR_EMPTY;
@@ -74,17 +84,20 @@ public class GetRawData {
             }
         }
 
+        //this method is called when execute of this class is called.
+        //Here we implement the logic of making a http connection to get the data
         @Override
         protected String doInBackground(String... params) {
 
             HttpURLConnection httpURLConnection = null;
             BufferedReader bufferedReader = null;
 
-            if(params==null){
-                return  null;
+            if (params == null) {
+                return null;
             }
 
-            try{
+            try {
+                //this means it will get the first parameter we enter as input when we call execute.
                 URL url = new URL(params[0]);
 
                 httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -92,7 +105,7 @@ public class GetRawData {
                 httpURLConnection.connect();
 
                 InputStream inputStream = httpURLConnection.getInputStream();
-                if(inputStream == null) {
+                if (inputStream == null) {
                     return null;
                 }
 
@@ -101,35 +114,30 @@ public class GetRawData {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
-                while((line = bufferedReader.readLine()) != null) {
+                while ((line = bufferedReader.readLine()) != null) {
                     buffer.append(line + "\n");
                 }
 
                 return buffer.toString();
 
 
+            } catch (IOException e) {
 
-            }
-            catch(IOException e){
-
-                Log.e(LOG_DLOAD, "Error" , e);
-                return  null;
+                Log.e(LOG_DLOAD, "Error", e);
+                return null;
 
             } finally {
-                if(httpURLConnection != null) {
+                if (httpURLConnection != null) {
                     httpURLConnection.disconnect();
                 }
-                if(bufferedReader != null) {
+                if (bufferedReader != null) {
                     try {
                         bufferedReader.close();
-                    } catch(final IOException e) {
-                        Log.e(LOG_DLOAD,"Error closing stream", e);
+                    } catch (final IOException e) {
+                        Log.e(LOG_DLOAD, "Error closing stream", e);
                     }
                 }
             }
-
-
-
 
 
         }

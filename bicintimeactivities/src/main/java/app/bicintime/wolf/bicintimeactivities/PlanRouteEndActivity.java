@@ -36,7 +36,6 @@ public class PlanRouteEndActivity extends BaseActivity {
                 startActivity(intent);
 
 
-
             }
         });
 

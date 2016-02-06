@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+//This class groups similar behaviour shared among activities such as setting the toolbar and navigation drawer.
 public class BaseActivity extends AppCompatActivity {
 
     protected DrawerLayout drawerLayout;
@@ -26,21 +27,16 @@ public class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_base);
 
 
-
-
-
-
-
     }
 
-    protected void setUpDrawer(){
+    protected void setUpDrawer() {
 
         Log.d(LOG_TAG, "Entering setUpDrawer");
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        if(navigationView!=null){
+        if (navigationView != null) {
             Log.d(LOG_TAG, "Entering inside if onCreate");
             prepararDrawer(navigationView);
 
@@ -50,7 +46,6 @@ public class BaseActivity extends AppCompatActivity {
         }
 
         //fragmentManager.addOnBackStackChangedListener(getListener());
-
 
 
     }
@@ -119,6 +114,6 @@ public class BaseActivity extends AppCompatActivity {
 
         Log.d(LOG_TAG, "Entering onBackPressend on baseactivity");
 
-    super.onBackPressed();
+        super.onBackPressed();
     }
 }

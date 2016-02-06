@@ -56,7 +56,7 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
             }
         });
 
-        linearl_current_loc= (LinearLayout) rootView.findViewById(R.id.linearl_current_location);
+        linearl_current_loc = (LinearLayout) rootView.findViewById(R.id.linearl_current_location);
         linearl_current_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,11 +107,11 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) { //Dunno why never called ???
 
-        Log.d(LOG_TAG,"Entering onClick override with view id: " + v.getId());
+        Log.d(LOG_TAG, "Entering onClick override with view id: " + v.getId());
 
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-        if(v.getId() == R.id.linearl_choose_onmap){
+        if (v.getId() == R.id.linearl_choose_onmap) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.root_framelayout, new MapFragmentv2());
             fragmentTransaction.addToBackStack(PlanRouteFragmentStartA.class.getName());
@@ -119,8 +119,7 @@ public class PlanRouteFragmentStartA extends Fragment implements View.OnClickLis
             fragmentManager.executePendingTransactions();
         }
 
-        if(v.getId() == R.id.linearl_current_location){
-
+        if (v.getId() == R.id.linearl_current_location) {
 
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

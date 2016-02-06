@@ -74,13 +74,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     int maxLength = 10;
-                    String latitude,longitude, location;
+                    String latitude, longitude, location;
                     //location = myCoordinates.toString();
                     latitudeLong = myCoordinates.latitude;
                     latitude = latitudeLong.toString().substring(0, maxLength);
                     longitudeLong = myCoordinates.longitude;
                     longitude = longitudeLong.toString().substring(0, maxLength);
-                    location = "" + latitude + " / "+ longitude;
+                    location = "" + latitude + " / " + longitude;
 
                     editor.putString("currentLocationStart", location);
                     editor.commit();
@@ -99,13 +99,13 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
                     int maxLength = 10;
-                    String latitude,longitude, location;
+                    String latitude, longitude, location;
                     //location = myCoordinates.toString();
                     latitudeLong = myCoordinates.latitude;
                     latitude = latitudeLong.toString().substring(0, maxLength);
                     longitudeLong = myCoordinates.longitude;
                     longitude = longitudeLong.toString().substring(0, maxLength);
-                    location = "" + latitude + " / "+ longitude;
+                    location = "" + latitude + " / " + longitude;
 
                     editor.putString("currentLocationEnd", location);
                     editor.commit();
