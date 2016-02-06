@@ -139,8 +139,6 @@ public class GetMapDirectionsJsonData extends GetRawData {
             return;
         }
 
-
-         ////
         Log.d(LOG_DLOAD, "After if on ProcessResult");
 
         /*
@@ -216,11 +214,6 @@ public class GetMapDirectionsJsonData extends GetRawData {
         return stepsArrayList;
     }
 
-    private void testMerge(){
-
-        
-    }
-
 
     //this thread extends downloadrawdata to reuse funcionality, as extra, it will call processResult to parse json data.
     //Note that we always call first the super methods so the process is set correctly.
@@ -243,7 +236,6 @@ public class GetMapDirectionsJsonData extends GetRawData {
 
         private void getTest(){
             // nothing
-            int j = 5;
         }
     }
 }
