@@ -8,7 +8,6 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -85,9 +84,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     latitude = latitudeLong.toString().substring(0, maxLength);
                     longitudeLong = myCoordinates.longitude;
                     longitude = longitudeLong.toString().substring(0, maxLength);
-                    location = "" + latitude + " / " + longitude;
+                    location = "" + latitude + "," + longitude;
 
                     editor.putString("currentLocationStart", location);
+                    Log.d(LOG_MAP, "Passing the following start coordinates:" + location);
                     editor.commit();
 
                     startActivity(intent1);
@@ -110,9 +110,10 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
                     latitude = latitudeLong.toString().substring(0, maxLength);
                     longitudeLong = myCoordinates.longitude;
                     longitude = longitudeLong.toString().substring(0, maxLength);
-                    location = "" + latitude + " / " + longitude;
+                    location = "" + latitude + "," + longitude;
 
                     editor.putString("currentLocationEnd", location);
+                    Log.d(LOG_MAP, "Passing the following end coordinates:" + location);
                     editor.commit();
 
                     startActivity(intent1);

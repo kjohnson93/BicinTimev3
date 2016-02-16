@@ -27,6 +27,7 @@ public class PlanSelectTimeActivity extends BaseActivity {
         setContentView(R.layout.activity_plan_select_time);
 
 
+
         agregarToolbar();
         setUpDrawer();
 
@@ -193,5 +194,11 @@ public class PlanSelectTimeActivity extends BaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(LOG_TIME, "OnResume being called from planselectTimeActivity");
     }
 }

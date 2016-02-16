@@ -15,9 +15,11 @@ import java.util.ArrayList;
 public class GetBicinTimeJsonData extends GetRawData {
 
     private static final String LOG_DLOAD = "LOGDOWNLOAD";
+    private static final String LOG_URI = "LOGURI";
     private Uri mDestinationUri;
     String origin, destination, time;
     private ArrayList<Route> routes = new ArrayList<>();
+    private ArrayList<Waypoints> waypointsArrayList  = new ArrayList<>();
 
     public GetBicinTimeJsonData(String origin, String destination, String time) {
         super(null);
@@ -25,6 +27,9 @@ public class GetBicinTimeJsonData extends GetRawData {
         this.destination = destination;
         this.time = time;
         CreateUri();
+
+
+        //mDestinationUri = Uri.parse("http://bicing.h2o.net.br/getroute.php?origin=41.40293,2.1917018000000326&destination=41.39464359999999,2.1588451000000077&time=1454795499");
 
     }
 
@@ -51,7 +56,7 @@ public class GetBicinTimeJsonData extends GetRawData {
                 build();
 
 
-        Log.d(LOG_DLOAD, "My uri is: " + mDestinationUri);
+        Log.d(LOG_URI, "My uri from BicinTime is: " + mDestinationUri);
 
 
         return mDestinationUri != null;
@@ -78,6 +83,7 @@ public class GetBicinTimeJsonData extends GetRawData {
         final String street = "street";
         final String street_number = "street_number";*/
 
+        //getting the waypoints coordinates coming from the 5 possible routes (10 waypoints)
         try {
             JSONArray jsonArray = new JSONArray(getmData());
 
@@ -97,8 +103,10 @@ public class GetBicinTimeJsonData extends GetRawData {
                 String stationid = start.getString("station_id");
                 String bikes = start.getString("bikes");
                 String slots = start.getString("slots");
-                String latitude = start.getString("latitude");
-                String longitude = start.getString("longitude");
+                Double latitudeStart = start.getDouble("latitude");
+                Double longitudeStart = start.getDouble("longitude");
+               /* String latitude = start.getString("latitude");
+                String longitude = start.getString("longitude");*/
                 String street = start.getString("street");
                 String street_number = start.getString("street_number");
 
@@ -120,8 +128,10 @@ public class GetBicinTimeJsonData extends GetRawData {
                 String stationid_arr = arrive.getString("station_id");
                 String bikes_arr = arrive.getString("bikes");
                 String slots_arr = arrive.getString("slots");
-                String latitude_arr = arrive.getString("latitude");
-                String longitude_arr = arrive.getString("longitude");
+                Double latitudeArrive = arrive.getDouble("latitude");
+                Double longitudeArrive = arrive.getDouble("longitude");
+       /*         String latitude_arr = arrive.getString("latitude");
+                String longitude_arr = arrive.getString("longitude");*/
                 String street_arr = arrive.getString("street");
                 String street_number_arr = arrive.getString("street_number");
 
@@ -155,6 +165,14 @@ public class GetBicinTimeJsonData extends GetRawData {
                 String departure_risk = risk.getString("departure");
                 String destination_risk = risk.getString("destination");
 
+                Waypoints waypointStationStart = new Waypoints(latitudeStart,longitudeStart);
+                Waypoints waypointStationArrive = new Waypoints(latitudeArrive, longitudeArrive);
+
+                waypointsArrayList.add(waypointStationStart);
+                waypointsArrayList.add(waypointStationArrive);
+
+                Log.d(LOG_DLOAD, "waypointsArrayList size is: " + waypointsArrayList.size());
+
 
             }
 
@@ -164,6 +182,10 @@ public class GetBicinTimeJsonData extends GetRawData {
         }
 
 
+    }
+
+    public ArrayList<Waypoints> getWaypointsArrayList() {
+        return waypointsArrayList;
     }
 
 
@@ -178,7 +200,8 @@ public class GetBicinTimeJsonData extends GetRawData {
 
         @Override
         protected String doInBackground(String... params) {
-            return super.doInBackground(params);
+           String[] uri = {mDestinationUri.toString()}; //because on super method below, we must enter an array of strings as input.
+            return super.doInBackground(uri);
         }
     }
 }
