@@ -138,8 +138,6 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
         Log.d(LOG_DLOAD, "stepsArrayList inside onMapRady size is: " + stepsArrayList.size());
 
 
-
-
     }
 
     @Override
@@ -190,26 +188,26 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
         //Marker m1= (Marker) hashMap.get(m1);
         Log.d(LOG_MAP, "Marker m1 from map: " + m1);
-        Marker m2= (Marker) hashMap.get("MarkerBiciGreen");
+        Marker m2 = (Marker) hashMap.get("MarkerBiciGreen");
         Log.d(LOG_MAP, "Marker m2 from map: " + m2);
-        Marker m3= (Marker) hashMap.get("MarkerBiciRed");
+        Marker m3 = (Marker) hashMap.get("MarkerBiciRed");
         Log.d(LOG_MAP, "Marker m3 from map: " + m3);
-        Marker m4= (Marker) hashMap.get("MarkerFlagRed");
+        Marker m4 = (Marker) hashMap.get("MarkerFlagRed");
         Log.d(LOG_MAP, "Marker m4 from map: " + m4);
 
-        if (marker.equals(m1)){ //Marker != MarkerOptions
+        if (marker.equals(m1)) { //Marker != MarkerOptions
             Log.d(LOG_MAP, "Clicked marker start walk");
         }
 
-        if(marker.equals(m2)){
+        if (marker.equals(m2)) {
             Log.d(LOG_MAP, "Clicked marker start bicycling");
         }
 
-        if (marker.equals(m3)){
+        if (marker.equals(m3)) {
             Log.d(LOG_MAP, "Clicked marker end bicycling");
         }
 
-        if (marker.equals(m4)){
+        if (marker.equals(m4)) {
             Log.d(LOG_MAP, "Clicked marker end walking");
         }
 
@@ -341,19 +339,24 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
                 Log.d(LOG_POINTS, "Size of pointsRouteArrayList" + pointsRouteArrayList.size());
                 Log.d(LOG_PROGRESS, "asdsadsadsadas");
 
+                //draw first section
                 for (int i = 0; i < indexWpStart; i++) {
                     Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.GREEN));
                 }
 
+                //draw second section
                 for (int i = indexWpStart; i < indexWpArrive; i++) {
                     Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.RED));
                 }
 
+                //draws third section
                 for (int i = indexWpArrive; i < pointsRouteArrayList.size() - 1; i++) {
 
                     Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.GREEN));
                 }
 
+
+                //Getting the latlong coordinates for all the special points
                 LatLng latLngWpStart = pointsRouteArrayList.get(indexWpStart);
                 LatLng latLngWpArrive = pointsRouteArrayList.get(indexWpArrive);
                 String[] startLatlong = startLocation.split(",");
@@ -365,6 +368,8 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
                 LatLng startLatLng = new LatLng(startLatitude, startLongitude);
                 LatLng endLatLng = new LatLng(endLatitude, endLongitude);
 
+
+                //Draw markers on the 4 special points on the route. It needs every latlong coordinate for each one
                 drawMarker(latLngWpStart, latLngWpArrive, startLatLng, endLatLng);
 
 
@@ -372,6 +377,7 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
             }
 
+            //Draws the four markers on the route
             private void drawMarker(LatLng latLngWpStart, LatLng latLngWpArrive, LatLng startLatLng, LatLng endLatLng) {
 
                 ArrayList<LatLng> markersLatLng = new ArrayList<>();
