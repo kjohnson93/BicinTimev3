@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
@@ -35,6 +36,12 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        String previousActivityTitle = intent.getStringExtra("previousActivityTitle");
+        setTitle(previousActivityTitle);
+
+
         setContentView(R.layout.activity_maps);
 
         agregarToolbar();
@@ -54,6 +61,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
 
         Button buttonSetLocation = (Button) findViewById(R.id.map_setlocation);
+
 
         buttonSetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +136,12 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
     @Override
     public void onBackPressed() {
 
+        // go back to the menu
+        Intent intent = new Intent(this, PlanRouteActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+
+        /*
         Intent intent = getIntent();
         String previousActivity = intent.getStringExtra("previousActivity");
 
@@ -145,6 +159,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
             startActivity(intent1);
 
         }
+        */
 
     }
 

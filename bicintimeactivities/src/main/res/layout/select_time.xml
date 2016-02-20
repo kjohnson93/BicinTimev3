@@ -10,13 +10,17 @@
     l<LinearLayout
         android:id="@+id/linearl_now"
         android:clickable="true"
-        android:background="@drawable/backgroundtime"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/md_red_700"
+        >
 
 
         <TextView
@@ -24,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 1" />
+            android:text="Time 1"
+            android:textColor="@color/md_white_1000"/>
     </LinearLayout>
 
     <View
@@ -35,20 +40,25 @@
     <LinearLayout
         android:id="@+id/linearl_halfhour"
         android:clickable="true"
-        android:background="@drawable/backgroundtime"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:background="@color/md_red_300"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+        <!-- android:background="@drawable/backgroundtime" -->
 
         <TextView
             android:id="@+id/textviewTime2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 2" />
+            android:text="Time 2"
+            android:textColor="@color/md_white_1000"/>
     </LinearLayout>
 
 
@@ -59,12 +69,16 @@
     <LinearLayout
         android:id="@+id/linearl_onehour"
         android:clickable="true"
-        android:background="@drawable/backgroundtime"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/md_red_300"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
 
 
         <TextView
@@ -72,7 +86,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 3" />
+            android:text="Time 3"
+            android:textColor="@color/md_white_1000"/>
     </LinearLayout>
 
 
@@ -83,12 +98,16 @@
     <LinearLayout
         android:id="@+id/linearl_custom"
         android:clickable="true"
-        android:background="@drawable/backgroundtime"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/md_red_300"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
 
 
         <TextView
@@ -96,7 +115,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 4" />
+            android:text="Time 4"
+            android:textColor="@color/md_white_1000"/>
     </LinearLayout>
 
 

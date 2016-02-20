@@ -21,6 +21,8 @@ public class MainActivity extends BaseActivity {
         agregarToolbar();
         setUpDrawer();
 
+        // open drawer by default
+        openDrawer();
 
     }
 

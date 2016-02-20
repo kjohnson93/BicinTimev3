@@ -19,6 +19,7 @@ public class PlanRouteEndActivity extends BaseActivity {
         agregarToolbar();
         setUpDrawer();
 
+        /*
         LinearLayout linearlChooseOnMap, linearlCurrentLoc;
 
         linearlChooseOnMap = (LinearLayout) findViewById(R.id.linearl_choose_onmap);
@@ -58,8 +59,14 @@ public class PlanRouteEndActivity extends BaseActivity {
 
 
             }
-        });
+        });*/
 
+        // simply go ahead and show the map
+        Intent intent = new Intent(this, MapsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.putExtra("previousActivity", this.getClass().getName());
+        intent.putExtra("previousActivityTitle", this.getTitle());
+        startActivity(intent);
 
     }
 

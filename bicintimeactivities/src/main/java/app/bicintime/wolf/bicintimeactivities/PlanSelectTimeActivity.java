@@ -171,17 +171,17 @@ public class PlanSelectTimeActivity extends BaseActivity {
 
         final Long halfHourLong = Long.valueOf((30 * 60) * 1000);
         Long timeHalfHourLong = nowLong + halfHourLong;
-        timeHalfHour = timeHalfHourLong.toString();
+        timeHalfHour = simpleDateFormat.format(new Date(timeHalfHourLong)).toString();
 
         final Long oneHourLong = Long.valueOf((60 * 60) * 1000);
         Long timeOneHourLong = nowLong + oneHourLong;
-        timeOneHour = timeOneHourLong.toString();
+        timeOneHour = simpleDateFormat.format(new Date(timeOneHourLong)).toString();
 
         Log.d(LOG_TIME, "Time formmatted to: " + timeNow + "\n" + "Plus half an hour: " + timeHalfHour);
 
         textViewNow.setText("Now");
-        textViewHalfHour.setText("In half an hour: " + timeHalfHour);
-        textViewOneHour.setText("In one hour: " + timeOneHour);
+        textViewHalfHour.setText("In half an hour\n(at " + timeHalfHour + ")");
+        textViewOneHour.setText("In one hour\n(at " + timeOneHour + ")");
         textViewCustom.setText("Choose your time");
 
     }

@@ -9,8 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -26,8 +24,8 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_MAP = "LOGMAP";
     private static final String LOG_INT = "LOGINTENT";
-    private static final String default_startDate = "Choose a Start";
-    private static final String default_endDate = "Choose a Destination";
+    private static final String default_startDate = "";
+    private static final String default_endDate = "";
 
 
     private ToggleButton toggleButtonLoudiness, toggleButtonLanes;
@@ -42,8 +40,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         agregarToolbar();
         setUpDrawer();
 
-
-        LinearLayout linearLayout_start = (LinearLayout) findViewById(R.id.linearl_start);
+        /*LinearLayout linearLayout_start = (LinearLayout) findViewById(R.id.linearl_start);
         LinearLayout linearLayoutEnd = (LinearLayout) findViewById(R.id.linearl_end);
         LinearLayout linearLayoutTime = (LinearLayout) findViewById(R.id.linearl_time);
         LinearLayout linearLayoutFitness = (LinearLayout) findViewById(R.id.linearl_fitness);
@@ -131,7 +128,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
                 startActivity(intent);
             }
         });
-
+        */
 
     }
 
@@ -187,6 +184,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         Log.d(LOG_INT, "Onresume being called");
         super.onResume();
 
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -196,8 +194,8 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
             Log.d(LOG_INT, "Coming from main activity");
 
-            editor.clear();
-            editor.commit();
+            //editor.clear();
+            //editor.commit();
 
             Log.d(LOG_INT, "After clearing: " + sharedPreferences.getString("currentLocationStart", default_startDate));
             Log.d(LOG_INT, "After clearing: " + sharedPreferences.getString("currentLocationEnd", default_endDate));
@@ -209,12 +207,36 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
 
         Log.d(LOG_INT, "Setting Start textview with: " + startLocationData);
-        textViewStart.setText(startLocationData.toString().trim());
+        //textViewStart.setText(startLocationData.toString().trim());
 
 
         Log.d(LOG_INT, "Setting end textview with: " + endLocationData);
-        textViewEnd.setText(endLocationData.toString().trim());
+        //textViewEnd.setText(endLocationData.toString().trim());
 
+
+        // simply go ahead and show the option to select the origin
+        Intent newIntent;
+        if(startLocationData.length() == 0){
+            // the user has not set the starting point yet
+            newIntent = new Intent(this, PlanRouteStartActivity.class);
+        }else if(endLocationData.length() == 0){
+            // the user has not set the destination point yet
+            newIntent = new Intent(this, PlanRouteEndActivity.class);
+        }else{
+            editor.putString("startLocationToSelectTime", startLocationData.trim());
+            editor.putString("endLocationToSelectTime", endLocationData.trim());
+            editor.putString("loudinessToSelectTime", "false");
+            editor.putString("lanesToSelectTime", "false");
+            editor.commit();
+
+            // set the time
+            newIntent = new Intent(this, PlanSelectTimeActivity.class);
+        }
+
+        newIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        newIntent.putExtra("previousActivity", this.getClass().getName());
+        newIntent.putExtra("previousActivityTitle", this.getTitle());
+        startActivity(newIntent);
     }
 
     @Override

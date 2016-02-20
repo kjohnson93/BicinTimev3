@@ -22,7 +22,7 @@ public class PlanRouteStartActivity extends BaseActivity {
         agregarToolbar();
         setUpDrawer();
 
-
+        /*
         LinearLayout linearlChooseOnMap, linearlCurrentLoc;
 
         linearlChooseOnMap = (LinearLayout) findViewById(R.id.linearl_choose_onmap);
@@ -30,6 +30,7 @@ public class PlanRouteStartActivity extends BaseActivity {
         final TextView textViewStart = (TextView) findViewById(R.id.textview_coordinates_current);
 
 
+        // old: show two buttons to choose between "Current location" and "Choose on map"
         linearlChooseOnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +62,14 @@ public class PlanRouteStartActivity extends BaseActivity {
 
             }
         });
+        */
+
+        // simply go ahead and show the map
+        Intent intent = new Intent(PlanRouteStartActivity.this, MapsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.putExtra("previousActivity", this.getClass().getName());
+        intent.putExtra("previousActivityTitle", this.getTitle());
+        startActivity(intent);
 
     }
 

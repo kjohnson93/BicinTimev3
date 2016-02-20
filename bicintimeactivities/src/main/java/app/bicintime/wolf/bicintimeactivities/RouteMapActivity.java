@@ -102,10 +102,13 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
         //googleMap.setMyLocationEnabled(true);
 
-        double latitude = 41.372203;
-        double longitude = 2.180496;
 
+
+
+       /*
+        // old tests adding markers when loading the map
         final LatLng WTC = new LatLng(41.372203, 2.180496);
+
 
         double latitude_array[] = {41.401845, 41.395149, 41.398755, 41.388452};
         double longitude_array[] = {2.181116, 2.171503, 2.195879, 2.196050};
@@ -128,8 +131,11 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
 
         }
+        */
 
-
+        // centralize the map to the center of Barcelona
+        double latitude = 41.372203;
+        double longitude = 2.180496;
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
@@ -341,18 +347,18 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
                 //draw first section
                 for (int i = 0; i < indexWpStart; i++) {
-                    Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.GREEN));
+                    Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.parseColor("#8B0D0A")));
                 }
 
                 //draw second section
                 for (int i = indexWpStart; i < indexWpArrive; i++) {
-                    Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.RED));
+                    Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.parseColor("#0E568B")));
                 }
 
                 //draws third section
                 for (int i = indexWpArrive; i < pointsRouteArrayList.size() - 1; i++) {
 
-                    Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.GREEN));
+                    Polyline polyLine = googleMap.addPolyline(new PolylineOptions().add(pointsRouteArrayList.get(i), pointsRouteArrayList.get(i + 1)).width(5).color(Color.parseColor("#8B0D0A")));
                 }
 
 
@@ -393,14 +399,19 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
                     markers.add(new MarkerOptions().position(markersLatLng.get(i)));
                 }
 
-                Marker m1 = googleMap.addMarker(markers.get(0).icon(BitmapDescriptorFactory.fromResource(R.drawable.flaggreen40)));
+                // first, print the markers at the start and destination points, so they do not
+                // override the station marks
+                Marker m1 = googleMap.addMarker(markers.get(0).icon(BitmapDescriptorFactory.fromResource(R.drawable.greendot)));
                 hashMap.put(m1, m1);
-                Marker m2 = googleMap.addMarker(markers.get(1).icon(BitmapDescriptorFactory.fromResource(R.drawable.bicigreen40)));
-                hashMap.put(m2, m2);
-                Marker m3 = googleMap.addMarker(markers.get(2).icon(BitmapDescriptorFactory.fromResource(R.drawable.bicired40)));
-                hashMap.put(m3, m3);
-                Marker m4 = googleMap.addMarker(markers.get(3).icon(BitmapDescriptorFactory.fromResource(R.drawable.flagred40)));
+                Marker m4 = googleMap.addMarker(markers.get(3).icon(BitmapDescriptorFactory.fromResource(R.drawable.reddot)));
                 hashMap.put(m4, m4);
+
+                // here, the station marks
+                Marker m2 = googleMap.addMarker(markers.get(1).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinflatbicigreen)));
+                hashMap.put(m2, m2);
+                Marker m3 = googleMap.addMarker(markers.get(2).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinflatbicired)));
+                hashMap.put(m3, m3);
+
 
 
             }

@@ -40,14 +40,19 @@ public class BaseActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "Entering inside if onCreate");
             prepararDrawer(navigationView);
 
-
             // Seleccionar item por defecto. Este el fragmento que se abre. cuando se abre la app
-            //  seleccionarItem(navigationView.getMenu().getItem(0));
+            //seleccionarItem(navigationView.getMenu().getItem(0));
         }
-
         //fragmentManager.addOnBackStackChangedListener(getListener());
 
 
+    }
+
+    protected void openDrawer(){
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // open drawer by default
+        drawerLayout.openDrawer(navigationView);
     }
 
 

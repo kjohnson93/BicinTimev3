@@ -49,16 +49,14 @@ public class MapSFragment extends Fragment {
         }
 
 
-        googleMap = mMapView.getMap();
-        // latitude and longitude
-        double latitude = 41.372203;
-        double longitude = 2.180496;
 
+
+        /*
+        // old tests to draw markers in the map
         final LatLng WTC = new LatLng(41.372203, 2.180496);
 
         double latitude_array[] = {41.401845, 41.395149, 41.398755, 41.388452};
         double longitude_array[] = {2.181116, 2.171503, 2.195879, 2.196050};
-
 
         googleMap = mMapView.getMap();
 
@@ -79,8 +77,14 @@ public class MapSFragment extends Fragment {
             googleMap.addMarker(markers.get(i));
 
 
-        }
+        } */
 
+        // centralize the map in Barcelona
+
+        googleMap = mMapView.getMap();
+        // latitude and longitude of Barcelona
+        double latitude = 41.372203;
+        double longitude = 2.180496;
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)).zoom(12).build();

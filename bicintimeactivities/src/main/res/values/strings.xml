@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"BicintimeActivities"</string>
+    <string name="app_name">"BicinTime"</string>
 
     <string name="action_settings">Configuración</string>
     <string name="action_search">Buscar</string>
@@ -32,17 +32,17 @@
     <string name="drawer_plan">Plan a Route</string>
     <string name="drawer_bikes">Bike stations</string>
     <string name="drawer_settings">Configuration</string>
-    <string name="title_activity_plan_route">PlanRouteActivity</string>
+    <string name="title_activity_plan_route">Set up your route</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_plan_route_start">PlanRouteStartActivity</string>
-    <string name="title_activity_plan_route_end">PlanRouteEndActivity</string>
+    <string name="title_activity_plan_route_start">First, choose your starting point</string>
+    <string name="title_activity_plan_route_end">Now, choose your destination</string>
     <string name="title_activity_clock">ClockActivity</string>
-    <string name="title_activity_plan_select_time">PlanSelectTimeActivity</string>
+    <string name="title_activity_plan_select_time">When do you plan to leave?</string>
     <string name="title_activity_plan_fitness">PlanFitnessActivity</string>
     <string name="title_activity_route">RouteActivity</string>
-    <string name="title_activity_route_map">RouteMapActivity</string>
+    <string name="title_activity_route_map">This is your route</string>
 
 </resources>
