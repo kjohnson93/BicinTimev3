@@ -7,20 +7,16 @@
 
     <!-- !!!gravity has to do with the parent, not children!!!!-->
 
-    l<LinearLayout
+    <LinearLayout
         android:id="@+id/linearl_now"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/backgroundtime"
+        android:clickable="true"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/md_red_700"
-        >
+        android:orientation="vertical">
 
 
         <TextView
@@ -28,8 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 1"
-            android:textColor="@color/md_white_1000"/>
+            android:text="Time 1" />
     </LinearLayout>
 
     <View
@@ -39,26 +34,21 @@
 
     <LinearLayout
         android:id="@+id/linearl_halfhour"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/backgroundtime"
+        android:clickable="true"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/md_red_300"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
-        <!-- android:background="@drawable/backgroundtime" -->
+        android:orientation="vertical">
+
 
         <TextView
             android:id="@+id/textviewTime2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 2"
-            android:textColor="@color/md_white_1000"/>
+            android:text="Time 2" />
     </LinearLayout>
 
 
@@ -68,17 +58,13 @@
 
     <LinearLayout
         android:id="@+id/linearl_onehour"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/backgroundtime"
+        android:clickable="true"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/md_red_300"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:orientation="vertical">
 
 
         <TextView
@@ -86,8 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 3"
-            android:textColor="@color/md_white_1000"/>
+            android:text="Time 3" />
     </LinearLayout>
 
 
@@ -97,17 +82,13 @@
 
     <LinearLayout
         android:id="@+id/linearl_custom"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/backgroundtime"
+        android:clickable="true"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:background="@color/md_red_300"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:orientation="vertical">
 
 
         <TextView
@@ -115,15 +96,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Time 4"
-            android:textColor="@color/md_white_1000"/>
+            android:text="Time 4" />
     </LinearLayout>
 
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"></View>
-
 
 
 </LinearLayout>

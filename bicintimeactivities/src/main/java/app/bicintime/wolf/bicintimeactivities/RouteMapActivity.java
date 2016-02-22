@@ -158,7 +158,7 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
         // editor.putString("timeToRoute", timeSelected); //I think it may be not needed..
         editor.commit();
 
-        Intent intent = new Intent(this, PlanSelectTimeActivity.class);
+        Intent intent = new Intent(this, RouteSelectionActivity.class);//fix sharedpref values on back navigation
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
 

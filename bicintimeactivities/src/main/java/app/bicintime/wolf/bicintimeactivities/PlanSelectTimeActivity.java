@@ -119,7 +119,7 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("timeToRoute", timeNow);  //TODO Make a dialog fragment to choose an specific time. !
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
 
