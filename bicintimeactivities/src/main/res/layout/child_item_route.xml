@@ -1,43 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:clickable="true"
+    android:clickable="false"
     android:orientation="vertical"
     android:paddingLeft="40dp"
     tools:context=".MainActivity">
     <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"></View>
+        android:layout_height="3dp"
+        android:clickable="false"></View>
 
 
     <LinearLayout
         android:id="@+id/route_part_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:clickable="false">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/flaggreen40" />
+            android:src="@drawable/flaggreen40"
+            android:clickable="false"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="false">
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Leave at" />
+                android:text="Leave at"
+                android:clickable="false"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start Street" />
+                android:text="Start Street"
+                android:clickable="false"/>
 
 
         </LinearLayout>
@@ -46,41 +54,48 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"></View>
+        android:layout_height="1dp"
+        android:clickable="false"></View>
 
     <LinearLayout
         android:id="@+id/route_part_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:clickable="true"
+        android:clickable="false"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="false">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bicigreen40" />
+                android:src="@drawable/bicigreen40"
+                android:clickable="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="false">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Get bike at" />
+                    android:text="Get bike at"
+                    android:clickable="false"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bike Start Street" />
+                    android:text="Bike Start Street"
+                    android:clickable="false"/>
 
 
             </LinearLayout>
@@ -90,41 +105,47 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"></View>
+        android:layout_height="1dp"
+        android:clickable="false"></View>
 
     <LinearLayout
         android:id="@+id/route_part_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:clickable="true"
+        android:clickable="false"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="false">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bicired40" />
+                android:src="@drawable/bicired40"
+                android:clickable="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="false">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Leave bike at" />
+                    android:text="Leave bike at"
+                    android:clickable="false"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bike arrive street" />
+                    android:text="Bike arrive street"
+                    android:clickable="false"/>
 
 
             </LinearLayout>
@@ -134,41 +155,47 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"></View>
+        android:layout_height="1dp"
+        android:clickable="false"></View>
 
     <LinearLayout
         android:id="@+id/route_part_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:clickable="true"
+        android:clickable="false"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="false">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bicired40" />
+                android:src="@drawable/bicired40"
+                android:clickable="false"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="false">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Arrive at" />
+                    android:text="Arrive at"
+                    android:clickable="false"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Arrival street"></TextView>
+                    android:text="Arrival street"
+                    android:clickable="false"></TextView>
 
             </LinearLayout>
         </LinearLayout>
@@ -176,7 +203,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="false">
 
 
         </LinearLayout>
@@ -184,7 +212,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"></View>
+        android:layout_height="1dp"
+        android:clickable="false"></View>
 
 
 </LinearLayout>

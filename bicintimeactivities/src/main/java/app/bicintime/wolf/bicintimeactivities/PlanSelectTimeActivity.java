@@ -18,6 +18,7 @@ public class PlanSelectTimeActivity extends BaseActivity {
 
     private static final String LOG_TIME = "LOGTIME";
     private static final String DEFAULT = "Default text";
+    private static final String LOG_FLOW = "LOG_FLOW";
     private String startLocation, endLocation, loudiness, lanes;
     String timeNow, timeHalfHour, timeOneHour;
 
@@ -26,10 +27,13 @@ public class PlanSelectTimeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_select_time);
 
+        Log.d(LOG_FLOW, "PlanSelectTime onCreate navigation");
+
 
 
         agregarToolbar();
         setUpDrawer();
+        setTitle("Select the time");
 
         setUpTime();
         getSharedPreferencesData();
@@ -48,14 +52,16 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString("startLocationToRoute", startLocation);
-                editor.putString("endLocationToRoute", endLocation);
-                editor.putString("loudinessToRoute", loudiness);
-                editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute", timeNow);
+                editor.putString("startLocation", startLocation);
+                editor.putString("endLocation", endLocation);
+                editor.putString("loudiness", loudiness);
+                editor.putString("lanes", lanes);
+                editor.putString("timeSelected", timeNow);
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
+//                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
+
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
 
@@ -70,14 +76,16 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString("startLocationToRoute", startLocation);
-                editor.putString("endLocationToRoute", endLocation);
-                editor.putString("loudinessToRoute", loudiness);
-                editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute", timeHalfHour);
+                editor.putString("startLocation", startLocation);
+                editor.putString("endLocation", endLocation);
+                editor.putString("loudiness", loudiness);
+                editor.putString("lanes", lanes);
+                editor.putString("timeSelected", timeHalfHour);
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
+//                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
+
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
@@ -95,10 +103,10 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("endLocationToRoute", endLocation);
                 editor.putString("loudinessToRoute", loudiness);
                 editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute", timeOneHour);
+                editor.putString("timeSelected", timeOneHour);
                 editor.commit();
 
-                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteMapActivity.class);
+                Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
@@ -116,7 +124,7 @@ public class PlanSelectTimeActivity extends BaseActivity {
                 editor.putString("endLocationToRoute", endLocation);
                 editor.putString("loudinessToRoute", loudiness);
                 editor.putString("lanesToRoute", lanes);
-                editor.putString("timeToRoute", timeNow);  //TODO Make a dialog fragment to choose an specific time. !
+                editor.putString("timeSelected", timeNow);  //TODO Make a dialog fragment to choose an specific time. !
                 editor.commit();
 
                 Intent intent = new Intent(PlanSelectTimeActivity.this, RouteSelectionActivity.class);
@@ -133,8 +141,8 @@ public class PlanSelectTimeActivity extends BaseActivity {
     private void getSharedPreferencesData() {
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
-        startLocation = sharedPreferences.getString("startLocationToSelectTime", DEFAULT);
-        endLocation = sharedPreferences.getString("endLocationToSelectTime", DEFAULT);
+        startLocation = sharedPreferences.getString("currentLocationStart", DEFAULT);
+        endLocation = sharedPreferences.getString("currentLocationEnd", DEFAULT);
         loudiness = sharedPreferences.getString("loudinessToSelectTime", DEFAULT);
         lanes = sharedPreferences.getString("lanesToSelectTime", DEFAULT);
 
@@ -142,7 +150,6 @@ public class PlanSelectTimeActivity extends BaseActivity {
         Log.d(LOG_TIME, "Im getting the next data (PlanSelectTime): " + startLocation + "\n" + endLocation + "\n" + loudiness + "\n" + lanes);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
         editor.commit();
 
 
@@ -190,7 +197,7 @@ public class PlanSelectTimeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(this, PlanRouteActivity.class);
+        Intent intent = new Intent(this, PlanRouteStartActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
 

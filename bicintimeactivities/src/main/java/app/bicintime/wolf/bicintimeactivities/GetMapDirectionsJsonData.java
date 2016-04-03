@@ -158,7 +158,6 @@ public class GetMapDirectionsJsonData extends GetRawData {
     //Commented because not using Steps anymore.
 /*    private ArrayList<Steps> generateSteps(ArrayList<LatLng> arrayLatLng){
         ArrayList<Steps> steps = new ArrayList<Steps>();
-
         // each step is composed by two points (starting and ending)
         for(int i = 0; i < arrayLatLng.size() - 1; i++){
             steps.add(
@@ -167,7 +166,6 @@ public class GetMapDirectionsJsonData extends GetRawData {
                             arrayLatLng.get(i + 1).latitude,
                             arrayLatLng.get(i + 1).longitude));
         }
-
         return steps;
     }*/
 
@@ -209,26 +207,18 @@ public class GetMapDirectionsJsonData extends GetRawData {
 
             //Commented because we are not using Steps anymore.
            /* for (int i = 0; i < jsonSteps.length(); i++) {
-
                 JSONObject stepObject = jsonSteps.getJSONObject(i);
-
                 JSONObject startLocationObject = stepObject.getJSONObject("start_location");
                 JSONObject endLocationObject = stepObject.getJSONObject("end_location");
-
                 Double startLatitude = startLocationObject.getDouble("lat");
                 Double startLongitude = startLocationObject.getDouble("lng");
                 Double endLatitude = endLocationObject.getDouble("lat");
                 Double endLongitude = endLocationObject.getDouble("lng");
-
-
                 Steps step = new Steps(startLatitude, startLongitude, endLatitude, endLongitude);
                 Log.d(LOG_DLOAD, "Step object:" + step.toString());
                 //stepsList.add(step);null
                 stepsArrayList.add(step);
-
                 Log.d(LOG_DLOAD, "SIZE of steps in GetMapDirectionsJsonData is: " + stepsArrayList.size());
-
-
             }*/
 
             //Now we are not using a Step array, jsut a latlong array...

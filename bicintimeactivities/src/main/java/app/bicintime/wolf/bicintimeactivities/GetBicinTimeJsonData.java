@@ -19,7 +19,30 @@ public class GetBicinTimeJsonData extends GetRawData {
     private Uri mDestinationUri;
     String origin, destination, time;
     private ArrayList<Route> routes = new ArrayList<>();
-    private ArrayList<Waypoints> waypointsArrayList  = new ArrayList<>();
+    private ArrayList<Waypoints> waypointsArrayList = new ArrayList<>();
+
+    //en print, sumTime
+    //en distance, sum
+    //en start, street
+    //en arrive, street, street_number
+    //en arrive tambien, dentro de estimation, bikes, slot, station_id
+
+    private ArrayList<String> sumTimeArrayList = new ArrayList<>();
+    private ArrayList<Integer> distanceArrayList = new ArrayList<>();
+    private ArrayList<String> streetUpArrayList = new ArrayList<>();
+    private ArrayList<String> streetDownArrayList = new ArrayList<>();
+    private ArrayList<String> streetNumberUpArrayList = new ArrayList<>();
+    private ArrayList<String> streetNumberDownArrayList = new ArrayList<>();
+    private ArrayList<String> stationIdUpArrayList = new ArrayList<>();
+    private ArrayList<String> stationIdDownArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationBikesUpNowArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationBikesDownNowArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationBikesUpEstArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationBikesDownEstArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationSlotsUpNowArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationSlotsDownNowArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationSlotsUpEstArrayList = new ArrayList<>();
+    private ArrayList<Integer> stationSlotsDownEstArrayList = new ArrayList<>();
 
     public GetBicinTimeJsonData(String origin, String destination, String time) {
         super(null);
@@ -29,7 +52,7 @@ public class GetBicinTimeJsonData extends GetRawData {
         CreateUri();
 
 
-        //mDestinationUri = Uri.parse("http://bicing.h2o.net.br/getroute.php?origin=41.40293,2.1917018000000326&destination=41.39464359999999,2.1588451000000077&time=1454795499");
+        //http://bicing.h2o.net.br/getroute.php?origin=41.4434894%2C2.17383787&destination=41.4147391%2C2.20838706&time=1459071324774
 
     }
 
@@ -55,16 +78,15 @@ public class GetBicinTimeJsonData extends GetRawData {
         mDestinationUri = Uri.parse(BICINTIME_BASE_URL).buildUpon().appendQueryParameter(PARAM_ORIGIN, origin).appendQueryParameter(PARAM_DESTINATION, destination).appendQueryParameter(PARAM_TIME, time).
                 build();
 
+//        mDestinationUri = Uri.parse("http://bicing.h2o.net.br/getroute.php?origin=41.40293,2.1917018000000326&destination=41.39464359999999,2.1588451000000077&time=1439804497313");
 
         Log.d(LOG_URI, "My uri from BicinTime is: " + mDestinationUri);
-
 
         return mDestinationUri != null;
 
     }
 
     public void processResult() {
-
 
         Log.d(LOG_DLOAD, "Entering on ProcessResult");
         if (getmDownloadStatus() != DownloadStatus.OK) {
@@ -73,15 +95,6 @@ public class GetBicinTimeJsonData extends GetRawData {
         }
 
         Log.d(LOG_DLOAD, "After if on ProcessResult");
-
-        /*
-        final String stationid = "station_id";
-        final String bikes = "bikes";
-        final String slots = "slots";
-        final String latitude = "latitude";
-        final String longitude = "longitude";
-        final String street = "street";
-        final String street_number = "street_number";*/
 
         //getting the waypoints coordinates coming from the 5 possible routes (10 waypoints)
         try {
@@ -101,83 +114,122 @@ public class GetBicinTimeJsonData extends GetRawData {
                 JSONObject start = jsonStation.getJSONObject("start");
 
                 String stationid = start.getString("station_id");
-                String bikes = start.getString("bikes");
-                String slots = start.getString("slots");
+//                String bikesUp = start.getString("bikes");
+                //now
+                Integer bikesUpNow = start.getInt("bikes");
+//                String slotsUp = start.getString("slots");
+                Integer slotsUpNow = start.getInt("slots");
                 Double latitudeStart = start.getDouble("latitude");
                 Double longitudeStart = start.getDouble("longitude");
                /* String latitude = start.getString("latitude");
                 String longitude = start.getString("longitude");*/
-                String street = start.getString("street");
-                String street_number = start.getString("street_number");
+                String streetUp = start.getString("street");
+                String streetNumberUp = start.getString("street_number");
 
-                Log.d(LOG_DLOAD, "Data inside these objects: \n " + "bikes: " + stationid + " bikes: " + bikes + " slots: " + slots);
 
                 JSONObject estimation = start.getJSONObject("estimation");
-
-                String bikes_est = estimation.getString("bikes");
-                String slots_est = estimation.getString("slots");
-
+//                String bikes_est = estimation.getString("bikes");
+//                String slots_est = estimation.getString("slots");
+                Integer bikesUpEst = estimation.getInt("bikes");
+                Integer slotsUpEst = estimation.getInt("slots");
                 JSONObject risk_est = estimation.getJSONObject("risk");
-
-                String departure = risk_est.getString("departure");
-                String destination = risk_est.getString("destination");
-
+//                String departure = risk_est.getString("departure");
+//                String destination = risk_est.getString("destination");
+                Double departure = risk_est.getDouble("departure");
+                Double destination = risk_est.getDouble("destination");
 
                 JSONObject arrive = jsonStation.getJSONObject("arrive");
-
-                String stationid_arr = arrive.getString("station_id");
-                String bikes_arr = arrive.getString("bikes");
-                String slots_arr = arrive.getString("slots");
+                String stationidDown = arrive.getString("station_id");
+//                String bikesDownNow = arrive.getString("bikes");
+//                String slotsDownNow = arrive.getString("slots");
+                Integer bikesDownNow = arrive.getInt("bikes");
+                Integer slotsDownNow = arrive.getInt("slots");
                 Double latitudeArrive = arrive.getDouble("latitude");
                 Double longitudeArrive = arrive.getDouble("longitude");
        /*         String latitude_arr = arrive.getString("latitude");
                 String longitude_arr = arrive.getString("longitude");*/
-                String street_arr = arrive.getString("street");
-                String street_number_arr = arrive.getString("street_number");
+                String streetDown = arrive.getString("street");
+                String streetNumberDown = arrive.getString("street_number");
 
                 JSONObject estimation_arr = arrive.getJSONObject("estimation");
-                String bikes_arr_est = estimation_arr.getString("bikes");
-                String slots_arr_est = estimation_arr.getString("slots");
+//                String bikes_arr_est = estimation_arr.getString("bikes");
+//                String slots_arr_est = estimation_arr.getString("slots");
+                Integer bikesDownEst = estimation_arr.getInt("bikes");
+                Integer slotsDownEst = estimation_arr.getInt("slots");
 
                 JSONObject risk_arr_est = estimation_arr.getJSONObject("risk");
-                String departure_arr_est = risk_arr_est.getString("departure");
-                String destination_arr_est = risk_arr_est.getString("destination");
-
-                Log.d(LOG_DLOAD, "Length of jsonarray is: " + jsonArray.length()); //not getting to this point
-
+//                String departure_arr_est = risk_arr_est.getString("departure");
+//                String destination_arr_est = risk_arr_est.getString("destination");
+                Double departure_arr_est = risk_arr_est.getDouble("departure");
+                Double destination_arr_est = risk_arr_est.getDouble("destination");
 
                 JSONObject distance = jsonRoute.getJSONObject("distance");
-                String depToStation = distance.getString("depToStation");
-                String bicing = distance.getString("bicing");
-                String stationToDest = distance.getString("stationToDest");
-                String sum = distance.getString("sum");
+//                String depToStation = distance.getString("depToStation");
+                Integer departToStation = distance.getInt("depToStation");
+//                String bicing = distance.getString("bicing");
+                Integer distBicing = distance.getInt("bicing");
+//                String stationToDest = distance.getString("stationToDest");
+                Integer stationToDest = distance.getInt("stationToDest");
+//                String distanceSum = distance.getString("sum");
+                Integer distanceSum = distance.getInt("sum");
 
                 JSONObject time = jsonRoute.getJSONObject("time");
-                String depToStation_time = time.getString("depToStation");
-                String bicing_time = time.getString("bicing");
-                String stationToDest_time = time.getString("stationToDest");
-                String sum_time = time.getString("sum");
+//                String depToStation_time = time.getString("depToStation");
+                //in minutes
+                Integer timeDepartToStation = time.getInt("depToStation");
+//                String bicing_time = time.getString("bicing");
+                Integer timeBicing = time.getInt("bicing");
+//                String stationToDest_time = time.getString("stationToDest");
+//                String sum_time = time.getString("sum");
+                Integer timeStationToDest = time.getInt("stationToDest");
+                Integer timeSum = time.getInt("sum");
 
                 JSONObject print = jsonRoute.getJSONObject("print");
                 String sumTime = print.getString("sumTime");
 
                 JSONObject risk = jsonRoute.getJSONObject("risk");
-                String departure_risk = risk.getString("departure");
-                String destination_risk = risk.getString("destination");
+//                String departure_risk = risk.getString("departure");
+//                String destination_risk = risk.getString("destination");
+                Double departure_risk = risk.getDouble("departure");
+                Double destination_risk = risk.getDouble("destination");
 
-                Waypoints waypointStationStart = new Waypoints(latitudeStart,longitudeStart);
+                //waypoint data
+                Waypoints waypointStationStart = new Waypoints(latitudeStart, longitudeStart);
                 Waypoints waypointStationArrive = new Waypoints(latitudeArrive, longitudeArrive);
-
                 waypointsArrayList.add(waypointStationStart);
                 waypointsArrayList.add(waypointStationArrive);
 
-                Log.d(LOG_DLOAD, "waypointsArrayList size is: " + waypointsArrayList.size());
+                //todo pillar los siguientes datos...
+
+                //sumTime data
+                sumTimeArrayList.add(sumTime);
+                //en distance, sum
+                distanceArrayList.add(distanceSum);
+                //en start, street
+                streetUpArrayList.add(streetUp);
+                streetNumberUpArrayList.add(streetNumberUp);
+                //bikes and slots
+                stationBikesUpNowArrayList.add(bikesUpNow);
+                stationSlotsUpNowArrayList.add(slotsUpNow);
+                stationBikesUpEstArrayList.add(bikesUpEst);
+                stationSlotsUpEstArrayList.add(slotsUpEst);
+
+                //en arrive, street, street_number
+                streetDownArrayList.add(streetDown);
+                streetNumberDownArrayList.add(streetNumberDown);
+                //en arrive tambien, dentro de estimation, bikes, slot, station_id
+                stationBikesDownNowArrayList.add(bikesDownNow);
+                stationSlotsDownNowArrayList.add(slotsDownNow);
+                stationBikesDownEstArrayList.add(bikesDownEst);
+                stationSlotsDownEstArrayList.add(slotsDownEst);
 
 
             }
 
 
         } catch (JSONException jsone) {
+
+            String error = jsone.getMessage();
 
         }
 
@@ -195,13 +247,80 @@ public class GetBicinTimeJsonData extends GetRawData {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             Log.d(LOG_DLOAD, "Calling on ProcessResult");
+            //here we sotring the data into variables
             processResult();
+
+
         }
 
         @Override
         protected String doInBackground(String... params) {
-           String[] uri = {mDestinationUri.toString()}; //because on super method below, we must enter an array of strings as input.
+            String[] uri = {mDestinationUri.toString()}; //because on super method below, we must enter an array of strings as input.
             return super.doInBackground(uri);
         }
+    }
+
+    public ArrayList<String> getSumTimeArrayList() {
+        return sumTimeArrayList;
+    }
+
+    public ArrayList<Integer> getDistanceArrayList() {
+        return distanceArrayList;
+    }
+
+    public ArrayList<String> getStreetUpArrayList() {
+        return streetUpArrayList;
+    }
+
+    public ArrayList<String> getStreetDownArrayList() {
+        return streetDownArrayList;
+    }
+
+    public ArrayList<String> getStreetNumberUpArrayList() {
+        return streetNumberUpArrayList;
+    }
+
+    public ArrayList<String> getStreetNumberDownArrayList() {
+        return streetNumberDownArrayList;
+    }
+
+    public ArrayList<String> getStationIdUpArrayList() {
+        return stationIdUpArrayList;
+    }
+
+    public ArrayList<String> getStationIdDownArrayList() {
+        return stationIdDownArrayList;
+    }
+
+    public ArrayList<Integer> getStationBikesUpNowArrayList() {
+        return stationBikesUpNowArrayList;
+    }
+
+    public ArrayList<Integer> getStationBikesDownNowArrayList() {
+        return stationBikesDownNowArrayList;
+    }
+
+    public ArrayList<Integer> getStationBikesUpEstArrayList() {
+        return stationBikesUpEstArrayList;
+    }
+
+    public ArrayList<Integer> getStationBikesDownEstArrayList() {
+        return stationBikesDownEstArrayList;
+    }
+
+    public ArrayList<Integer> getStationSlotsUpNowArrayList() {
+        return stationSlotsUpNowArrayList;
+    }
+
+    public ArrayList<Integer> getStationSlotsDownNowArrayList() {
+        return stationSlotsDownNowArrayList;
+    }
+
+    public ArrayList<Integer> getStationSlotsDownEstArrayList() {
+        return stationSlotsDownEstArrayList;
+    }
+
+    public ArrayList<Integer> getStationSlotsUpEstArrayList() {
+        return stationSlotsUpEstArrayList;
     }
 }

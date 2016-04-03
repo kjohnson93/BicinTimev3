@@ -92,7 +92,7 @@ public class PlanRouteFragment extends Fragment {
                 mapFragmentv2.setTargetFragment(PlanRouteFragment.this, 30);
 
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.mapframentxml, planRouteEndFragment); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
+                fragmentTransaction.replace(R.id.mapfragment, planRouteEndFragment); //YES! This is working. Because sorta the activity what is seeing is the main content layout instead of planroutelayout
                 fragmentTransaction.addToBackStack(PlanRouteFragment.class.getName());
                 fragmentTransaction.commit();
                 fragmentManager.executePendingTransactions();

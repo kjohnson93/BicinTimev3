@@ -29,6 +29,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
     private GoogleMap googleMap;
 
     private static final String LOG_MAP = "LOGMAP";
+    private static final String LOG_FLOW = "LOG_FLOW";
 
     LocationManager mLocationManager;
 
@@ -45,6 +46,8 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
         agregarToolbar();
         setUpDrawer();
+
+        Log.d(LOG_FLOW, "MapsActivity onCreate navigation");
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         supportMapFragment.getMapAsync(this);
@@ -79,11 +82,14 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
                     Log.d(LOG_MAP, "Entering start if: " + myCoordinates);
 
-                    Intent intent1 = new Intent(MapsActivity.this, PlanRouteActivity.class);
+                    Intent intent1 = new Intent(MapsActivity.this, PlanRouteEndActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                     SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                    //when we start the route calculation, we wipe out the data from the sharedpreferences file.
+                    editor.clear();
 
                     int maxLength = 10;
                     String latitude, longitude, location;
@@ -105,7 +111,7 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
                     Log.d(LOG_MAP, "Entering end if: " + myCoordinates);
 
-                    Intent intent1 = new Intent(MapsActivity.this, PlanRouteActivity.class);
+                    Intent intent1 = new Intent(MapsActivity.this, PlanSelectTimeActivity.class);
                     intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                     SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
@@ -137,29 +143,29 @@ public class MapsActivity extends BaseActivity implements OnMapReadyCallback, Lo
     public void onBackPressed() {
 
         // go back to the menu
-        Intent intent = new Intent(this, PlanRouteActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(intent);
+//        Intent intent = new Intent(this, PlanRouteActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//        startActivity(intent);
 
-        /*
         Intent intent = getIntent();
         String previousActivity = intent.getStringExtra("previousActivity");
 
         if (previousActivity.equals(PlanRouteStartActivity.class.getName())) {
 
-            Intent intent1 = new Intent(this, PlanRouteStartActivity.class);
+            Intent intent1 = new Intent(this, MainActivity.class);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
             startActivity(intent1);
 
 
         } else if (previousActivity.equals(PlanRouteEndActivity.class.getName())) {
 
-            Intent intent1 = new Intent(this, PlanRouteEndActivity.class);
+            Intent intent1 = new Intent(this, PlanRouteStartActivity.class);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            //put extra flagscurrentLocationEnd
             startActivity(intent1);
 
         }
-        */
 
     }
 

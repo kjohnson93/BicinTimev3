@@ -1,6 +1,7 @@
 package app.bicintime.wolf.bicintimeactivities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -9,52 +10,87 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.List;
 
-//AKA MapActivity
-public class MainActivity extends BaseActivity implements OnMapReadyCallback, LocationListener {
+public class RouteEnd extends BaseActivity implements OnMapReadyCallback, LocationListener {
 
+    private static final String FRAGMENT_KEY = "test";
     private GoogleMap googleMap;
     private static final String LOG_MAP = "LOGMAP";
     private static final String LOG_FLOW = "LOG_FLOW";
-
     LocationManager mLocationManager;
+    String startLocation = null;
+    String endLocation = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.d(LOG_FLOW, "MainActivity on create navigation");
+        setContentView(R.layout.activity_route_end);
 
+        //setting the screen nav drawer
         agregarToolbar();
         setUpDrawer();
-        setTitle("BicinTime");
 
+        //getting data from start scren map
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            startLocation = getIntent().getStringExtra("startLocation");
 
-        Bundle mainScreen = getIntent().getExtras();
-        if (mainScreen == null) {
-            // open drawer by default
-            openDrawer();
         }
 
-        SupportMapFragment supportMapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.mapFragmentStartContenidoPrincipal);
+
+
+        //calling the google map methods
+        SupportMapFragment supportMapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.mapFragmentEnd);
         supportMapFragment.getMapAsync(this);
+
+        endLocation = getLocation();
+
+        Button buttonSelection = (Button) findViewById(R.id.button_map_setlocation);
+        buttonSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                Intent intent = new Intent(RouteEnd.this, TimeSelection.class);
+                intent.putExtra("startLocation", startLocation);
+                intent.putExtra("endLocation",endLocation);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            }
+        });
+
 
     }
 
+
+    //Returns the latlong location of the center point on the camera map
+    private String getLocation() {
+
+        int maxLength = 10;
+        //todo watch for the np exception when navigatin' back
+        LatLng myCoordinates = googleMap.getCameraPosition().target;
+        Double latitudeLong, longitudeLong;
+        String latitude, longitude, startLocation;
+        latitudeLong = myCoordinates.latitude;
+        longitudeLong = myCoordinates.longitude;
+        latitude = latitudeLong.toString().substring(0, maxLength);
+        longitude = longitudeLong.toString().substring(0, maxLength);
+        return "" + latitude + "," + longitude;
+    }
+
     private Location getLastKnownLocation() {
-        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
         List<String> providers = mLocationManager.getProviders(true);
         Location bestLocation = null;
 
@@ -71,17 +107,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Lo
         return bestLocation;
     }
 
-    @Override
-    public void onBackPressed() {
-
-        super.onBackPressed();
-
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         this.googleMap = googleMap;
+
 
         // Getting LocationManager object from System Service LOCATION_SERVICE
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -108,41 +139,18 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Lo
             if (location != null) {
                 onLocationChanged(location);
                 Log.d(LOG_MAP, "My location is: " + "\n Latitude: " + location.getLatitude() + "Longitude: " + location.getLongitude());
-            } else {
+            }else{
                 throw new RuntimeException("It was not possible to get the location");
             }
 
-            locationManager.requestLocationUpdates(provider, 2000, 0, this);
-
-
-        }
-
-        double latitude = 41.372203;
-        double longitude = 2.180496;
-
-        final LatLng WTC = new LatLng(41.372203, 2.180496);
-
-        double latitude_array[] = {41.401845, 41.395149, 41.398755, 41.388452};
-        double longitude_array[] = {2.181116, 2.171503, 2.195879, 2.196050};
-
-        ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
-
-
-        for (int i = 0; i < latitude_array.length; i++) {
-
-            markers.add(new MarkerOptions().position(
-                    new LatLng(latitude_array[i], longitude_array[i])).title("Hello Maps"));
-
-            markers.get(i).icon(BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
-            googleMap.addMarker(markers.get(i));
+            locationManager.requestLocationUpdates(provider,2000,0,this);
 
 
         }
 
 
     }
+
 
     @Override
     public void onLocationChanged(Location location) {
@@ -171,7 +179,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Lo
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
 
-
     }
 
     @Override
@@ -189,5 +196,13 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Lo
 
     }
 
+    @Override
+    public void onBackPressed() {
 
+        Intent intent = new Intent(this, RouteStart.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+
+
+    }
 }

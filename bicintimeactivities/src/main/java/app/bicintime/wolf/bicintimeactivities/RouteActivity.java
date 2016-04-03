@@ -40,7 +40,6 @@ public class RouteActivity extends BaseActivity {
         Log.d(LOG_DLOAD, "Im getting the next data (RouteActivity): " + startLocation + "\n" + endLocation + "\n" + loudiness + "\n" + lanes + "\n" + timeSelected);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
         editor.commit();
 
     }

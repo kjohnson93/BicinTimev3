@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
 
     <!-- Contenido Principal -->
-    <include layout="@layout/main_route_start" />
+    <include layout="@layout/main_route_end" />
 
     <!-- Menú Deslizante -->
     <android.support.design.widget.NavigationView

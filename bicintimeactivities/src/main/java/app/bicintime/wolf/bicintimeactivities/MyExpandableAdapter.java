@@ -1,162 +1,99 @@
 package app.bicintime.wolf.bicintimeactivities;
 
-/**
- * Created by wolf on 2/20/2016.
- */
-
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-public class MyExpandableAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnChildClickListener {
+public class MyExpandableAdapter extends BaseExpandableListAdapter {
 
-    Context context;
-    private Activity activity;
-    private ArrayList<Object> childtems;
-    private LayoutInflater inflater;
-    private ArrayList<String> parentItems, child;
-    private static final String LOG_EXPLIST = "LOG_EXPLIST";
+    private Activity context;
+    private Map<String, List<String>> childItems;
+    private List<String> parentItems;
+    RouteInformation routeInformation;
 
-    public MyExpandableAdapter(ArrayList<String> parents, ArrayList<Object> childern, Context context) {
-        this.parentItems = parents;
-        this.childtems = childern;
+    public MyExpandableAdapter(Activity context, List<String> parentItems,
+                               Map<String, List<String>> childItems, RouteInformation routeTest) {
         this.context = context;
+        this.childItems = childItems;
+        this.parentItems = parentItems;
+        this.routeInformation = routeTest;
     }
 
-    public void setInflater(LayoutInflater inflater, Activity activity) {
-        this.inflater = inflater;
-        this.activity = activity;
-    }
-
-    @Override
-    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
-        child = (ArrayList<String>) childtems.get(groupPosition);
-
-        TextView textView = null;
-
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.group, null);
-        }
-
-        //When we click a differentes route it open different map
-        convertView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.d(LOG_EXPLIST, "Group clicked from convertView: " + groupPosition + "\n" + "And its child position: " + childPosition);
-
-                switch (groupPosition){
-
-                    case 0:
-                        Intent intent = new Intent(context, RouteMapActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        context.startActivity(intent);
-                        break;
-                    case 1:
-                        Intent intent2 = new Intent(context, RouteMapActivity.class);
-                        intent2.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        context.startActivity(intent2);
-                        break;
-                    case 2:
-                        Intent intent3 = new Intent(context, RouteMapActivity.class);
-                        intent3.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        context.startActivity(intent3);
-                        break;
-                    case 3:
-                        Intent intent4 = new Intent(context, RouteMapActivity.class);
-                        intent4.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        context.startActivity(intent4);
-                        break;
-                    case 4:
-
-
-                }
-            }
-        });
-
-
-        return convertView;
-    }
-
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.row, null);
-        }
-
-        ((CheckedTextView) convertView).setText(parentItems.get(groupPosition));
-        ((CheckedTextView) convertView).setChecked(isExpanded);
-
-        return convertView;
-    }
-
-    @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return null;
+        return childItems.get(parentItems.get(groupPosition)).get(childPosition);
     }
 
-    @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return 0;
+        return childPosition;
     }
 
-    @Override
+
+    public View getChildView(final int groupPosition, final int childPosition,
+                             boolean isLastChild, View convertView, ViewGroup parent) {
+        final String laptop = (String) getChild(groupPosition, childPosition);
+        LayoutInflater inflater = context.getLayoutInflater();
+
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.child_item_route, null);
+        }
+
+//        TextView item = (TextView) convertView.findViewById(R.id.laptop);
+//
+//        item.setText(laptop);
+        return convertView;
+    }
+
     public int getChildrenCount(int groupPosition) {
-        return ((ArrayList<String>) childtems.get(groupPosition)).size();
+        return childItems.get(parentItems.get(groupPosition)).size();
     }
 
-    @Override
     public Object getGroup(int groupPosition) {
-        return null;
+        return parentItems.get(groupPosition);
     }
 
-    @Override
     public int getGroupCount() {
         return parentItems.size();
     }
 
-    @Override
-    public void onGroupCollapsed(int groupPosition) {
-        super.onGroupCollapsed(groupPosition);
-    }
-
-    @Override
-    public void onGroupExpanded(int groupPosition) {
-        super.onGroupExpanded(groupPosition);
-    }
-
-    @Override
     public long getGroupId(int groupPosition) {
-        return 0;
+        return groupPosition;
     }
 
-    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded,
+                             View convertView, ViewGroup parent) {
+        String laptopName = (String) getGroup(groupPosition);
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.group_item,
+                    null);
+        }
+
+        //Ahora si tengo datos, el problema era al no rellenarse los datos del JSON file...
+        ArrayList<Integer> distanceRoute = routeInformation.getDistanceArrayList();
+
+
+        //here we set the grouper title
+        TextView item = (TextView) convertView.findViewById(R.id.txtvw_parent);
+        item.setTypeface(null, Typeface.BOLD);
+        item.setText(laptopName);
+        return convertView;
+    }
+
     public boolean hasStableIds() {
-        return false;
+        return true;
     }
 
-    @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
-    }
-
-    @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-        Log.d(LOG_EXPLIST, "cHIld clicked: " + childPosition);
-
-        return false;
+        return true;
     }
 }

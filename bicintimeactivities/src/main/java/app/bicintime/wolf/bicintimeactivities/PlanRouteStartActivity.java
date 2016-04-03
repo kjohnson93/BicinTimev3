@@ -1,26 +1,26 @@
 package app.bicintime.wolf.bicintimeactivities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class PlanRouteStartActivity extends BaseActivity {
 
     private static final String LOG_INT = "LOGINTENT";
 
     private static final String LOG_TAG = "LOGTRACE";
+    private static final String LOG_FLOW = "LOG_FLOW";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_route_start);
 
+        Log.d(LOG_FLOW, "PlanRouteStartActivity onCreate");
+
         agregarToolbar();
         setUpDrawer();
+        setTitle("Choose a start");
 
         /*
         LinearLayout linearlChooseOnMap, linearlCurrentLoc;
@@ -78,7 +78,7 @@ public class PlanRouteStartActivity extends BaseActivity {
 
         Log.d(LOG_TAG, "Entering onBackPresssend planroutestartactivity");
 
-        Intent intent = new Intent(this, PlanRouteActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
 

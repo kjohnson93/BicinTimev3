@@ -19,6 +19,7 @@ public class PlanRouteEndFragment extends Fragment {
 
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_BACK = "LOGBACK";
+    private static final String LOG_FLOW = "LOG_FLOW";
 
     @Nullable
     @Override

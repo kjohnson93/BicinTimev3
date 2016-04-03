@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
 
     <!-- Contenido Principal -->
-    <include layout="@layout/main_route_start" />
+    <include layout="@layout/contenido_principal_select_time" />
 
     <!-- Menú Deslizante -->
     <android.support.design.widget.NavigationView

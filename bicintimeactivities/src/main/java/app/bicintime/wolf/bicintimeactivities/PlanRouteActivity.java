@@ -24,11 +24,16 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
     private static final String LOG_TAG = "LOGTRACE";
     private static final String LOG_MAP = "LOGMAP";
     private static final String LOG_INT = "LOGINTENT";
+    private static final String LOG_FLOW = "LOG_FLOW";
     private static final String default_startDate = "";
     private static final String default_endDate = "";
 
 
     private ToggleButton toggleButtonLoudiness, toggleButtonLanes;
+
+
+    String startLocationData;
+    String endLocationData;
 
     TextView textViewStart, textViewEnd;
 
@@ -37,98 +42,10 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_route);
 
+        Log.d(LOG_FLOW, "PlanRouteActivity onCreate navigation");
+
         agregarToolbar();
         setUpDrawer();
-
-        /*LinearLayout linearLayout_start = (LinearLayout) findViewById(R.id.linearl_start);
-        LinearLayout linearLayoutEnd = (LinearLayout) findViewById(R.id.linearl_end);
-        LinearLayout linearLayoutTime = (LinearLayout) findViewById(R.id.linearl_time);
-        LinearLayout linearLayoutFitness = (LinearLayout) findViewById(R.id.linearl_fitness);
-        textViewStart = (TextView) findViewById(R.id.title_row1_2);
-        textViewEnd = (TextView) findViewById(R.id.title_row_2_2);
-
-        Button buttonSelectTime = (Button) findViewById(R.id.button_to_select_time);
-
-        setUpToggleButon();
-
-
-        linearLayout_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent intent = new Intent(PlanRouteActivity.this, PlanRouteStartActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-
-
-            }
-        });
-
-
-        linearLayoutEnd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(PlanRouteActivity.this, PlanRouteEndActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-
-            }
-        });
-
-        linearLayoutTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PlanRouteActivity.this, ClockActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-            }
-        });
-
-        linearLayoutFitness.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PlanRouteActivity.this, PlanFitnessActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-            }
-        });
-
-        buttonSelectTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                String startLocation;
-                String endLocation;
-                String loudiness, lanes;
-
-                startLocation = textViewStart.getText().toString().trim();
-                endLocation = textViewEnd.getText().toString().trim();
-
-                ToggleButton toggleButtonLoudiness = (ToggleButton) findViewById(R.id.toggleButton_loudiness);
-                ToggleButton toggleButtonLanes = (ToggleButton) findViewById(R.id.toggleButton_lanes);
-
-                Boolean isLoud = toggleButtonLoudiness.isChecked(); //????
-                Boolean isLanes = toggleButtonLanes.isChecked();
-
-                editor.putString("startLocationToSelectTime", startLocation);
-                editor.putString("endLocationToSelectTime", endLocation);
-                editor.putString("loudinessToSelectTime", isLoud.toString().trim());
-                editor.putString("lanesToSelectTime", isLanes.toString().trim());
-                editor.commit();
-
-                Log.d(LOG_INT, "What I'm sending: " + startLocation + "\n" + endLocation + "\n" + isLoud.toString().trim() + "\n" + isLanes.toString().trim());
-
-                Intent intent = new Intent(PlanRouteActivity.this, PlanSelectTimeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
-            }
-        });
-        */
 
     }
 
@@ -200,8 +117,8 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
             Log.d(LOG_INT, "After clearing: " + sharedPreferences.getString("currentLocationStart", default_startDate));
             Log.d(LOG_INT, "After clearing: " + sharedPreferences.getString("currentLocationEnd", default_endDate));
         }
-        String startLocationData = sharedPreferences.getString("currentLocationStart", default_startDate);
-        String endLocationData = sharedPreferences.getString("currentLocationEnd", default_endDate);
+        startLocationData = sharedPreferences.getString("currentLocationStart", default_startDate);
+        endLocationData = sharedPreferences.getString("currentLocationEnd", default_endDate);
         Log.d(LOG_INT, "Actual value of start: " + startLocationData);
         Log.d(LOG_INT, "Actual value of end: " + endLocationData);
 
@@ -222,6 +139,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
         }else if(endLocationData.length() == 0){
             // the user has not set the destination point yet
             newIntent = new Intent(this, PlanRouteEndActivity.class);
+
         }else{
             editor.putString("startLocationToSelectTime", startLocationData.trim());
             editor.putString("endLocationToSelectTime", endLocationData.trim());
@@ -231,6 +149,7 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
             // set the time
             newIntent = new Intent(this, PlanSelectTimeActivity.class);
+
         }
 
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -269,7 +188,6 @@ public class PlanRouteActivity extends BaseActivity implements GoogleMap.OnCamer
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
     }
 

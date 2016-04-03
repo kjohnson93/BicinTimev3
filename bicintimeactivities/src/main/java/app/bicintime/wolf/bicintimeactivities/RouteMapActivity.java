@@ -35,6 +35,7 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
     String startLocation, endLocation, loudiness, lanes, timeSelected;
     private ArrayList<LatLng> pointsRouteArrayList = new ArrayList<>();
     WeakHashMap<Marker, Object> hashMap = new WeakHashMap<Marker, Object>();
+    String waypointUp, waypointDown;
 
     ArrayList<MarkerOptions> markers = new ArrayList<>();
 
@@ -56,13 +57,10 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
         agregarToolbar();
         setUpDrawer();
+
+        setTitle("Your Route");
         getSharedPreferencesData();
 
-
-        // GetMapDirectionsJsonData getMapDirectionsJsonData = new GetMapDirectionsJsonData(startLocation,endLocation,timeSelected);
-        //stepsArrayList = getMapDirectionsJsonData.getSteps();
-        //Log.d(LOG_DLOAD, "stepsArrayList size on constructor is: " + stepsArrayList.size());
-        //getMapDirectionsJsonData.execute();
 
         //these two steps are needed to display our google maps on our screen.
         SupportMapFragment supportMapFragment = (SupportMapFragment) this.getSupportFragmentManager().findFragmentById(R.id.mapFragment);
@@ -74,17 +72,15 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
     private void getSharedPreferencesData() {
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
-        startLocation = sharedPreferences.getString("startLocationToRoute", DEFAULT);
-        endLocation = sharedPreferences.getString("endLocationToRoute", DEFAULT);
-        loudiness = sharedPreferences.getString("loudinessToRoute", DEFAULT);
-        lanes = sharedPreferences.getString("lanesToRoute", DEFAULT);
-        timeSelected = sharedPreferences.getString("timeToRoute", DEFAULT);
-
+        startLocation = sharedPreferences.getString("startLocation", DEFAULT);
+        endLocation = sharedPreferences.getString("endLocation", DEFAULT);
+        timeSelected = sharedPreferences.getString("timeSelected", DEFAULT);
+        waypointUp = sharedPreferences.getString("waypointUp", DEFAULT);
+        waypointDown = sharedPreferences.getString("waypointDown", DEFAULT);
 
         Log.d(LOG_DLOAD, "Im getting the next data (RouteActivity): " + startLocation + "\n" + endLocation + "\n" + loudiness + "\n" + lanes + "\n" + timeSelected);
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
         editor.commit();
     }
 
@@ -98,40 +94,6 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
         this.googleMap = googleMap;
 
         googleMap.setOnMarkerClickListener(this); //Remember put listener similar tu button listener.
-
-
-        //googleMap.setMyLocationEnabled(true);
-
-
-
-
-       /*
-        // old tests adding markers when loading the map
-        final LatLng WTC = new LatLng(41.372203, 2.180496);
-
-
-        double latitude_array[] = {41.401845, 41.395149, 41.398755, 41.388452};
-        double longitude_array[] = {2.181116, 2.171503, 2.195879, 2.196050};
-
-
-        MarkerOptions markerOptions[];
-
-        ArrayList<MarkerOptions> markers = new ArrayList<MarkerOptions>();
-
-
-        for (int i = 0; i < latitude_array.length; i++) {
-
-            markers.add(new MarkerOptions().position(
-                    new LatLng(latitude_array[i], longitude_array[i])).title("Hello Maps"));
-
-            markers.get(i).icon(BitmapDescriptorFactory
-                    .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
-            googleMap.addMarker(markers.get(i));
-
-
-        }
-        */
 
         // centralize the map to the center of Barcelona
         double latitude = 41.372203;
@@ -149,14 +111,15 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
     @Override
     public void onBackPressed() {
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("startLocationToSelectTime", startLocation);
-        editor.putString("endLocationToSelectTime", endLocation);
-        editor.putString("loudinessToSelectTime", loudiness);
-        editor.putString("lanesToSelectTim", lanes);
-        // editor.putString("timeToRoute", timeSelected); //I think it may be not needed..
-        editor.commit();
+        //todo ????
+//        SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("startLocationToSelectTime", startLocation);
+//        editor.putString("endLocationToSelectTime", endLocation);
+//        editor.putString("loudinessToSelectTime", loudiness);
+//        editor.putString("lanesToSelectTim", lanes);
+//        // editor.putString("timeToRoute", timeSelected); //I think it may be not needed..
+//        editor.commit();
 
         Intent intent = new Intent(this, RouteSelectionActivity.class);//fix sharedpref values on back navigation
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -252,12 +215,21 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
 
                 waypointsArrayList = getWaypointsArrayList();
 
-                Waypoints waypoint1 = waypointsArrayList.get(0); //station subida
-                Waypoints waypoint2 = waypointsArrayList.get(1); //station bajada
 
                 Log.d(LOG_DLOAD, "Size of waypoints array inside thread is: " + waypointsArrayList.size());
 
-                ProcessSteps processSteps = new ProcessSteps(startLocation, endLocation, waypoint1, waypoint2);
+                Waypoints waypointUpTest = waypointsArrayList.get(0); //station subida
+                Waypoints waypointDownTest = waypointsArrayList.get(1); //station bajada
+
+
+//                String [] coordUp = waypointUp.split(",");
+//                String [] coordDown = waypointDown.split(",");
+//                Waypoints waypointUpTest = new Waypoints(Double.parseDouble(coordUp[0]),Double.parseDouble(coordUp[1]));
+//                Waypoints waypointDownTest = new Waypoints(Double.parseDouble(coordDown[0]),Double.parseDouble(coordDown[1]));
+
+
+
+                ProcessSteps processSteps = new ProcessSteps(startLocation, endLocation, waypointUpTest, waypointDownTest);
                 processSteps.execute();
 
             }
@@ -273,8 +245,8 @@ public class RouteMapActivity extends BaseActivity implements OnMapReadyCallback
     public class ProcessSteps extends GetMapDirectionsJsonData {
 
         //constructor
-        public ProcessSteps(String origin, String destination, Waypoints waypointStart, Waypoints waypointEnd) {
-            super(origin, destination, waypointStart, waypointEnd);
+        public ProcessSteps(String origin, String destination, Waypoints waypointUp, Waypoints waypointDown) {
+            super(origin, destination, waypointUp, waypointDown);
 
         }
 
