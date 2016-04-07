@@ -25,13 +25,15 @@ public class RouteInformation {
     private ArrayList<Integer> stationSlotsDownNowArrayList = new ArrayList<>();
     private ArrayList<Integer> stationSlotsUpEstArrayList = new ArrayList<>();
     private ArrayList<Integer> stationSlotsDownEstArrayList = new ArrayList<>();
+    private ArrayList<Double> stationRiskArrayList = new ArrayList<>();
+
 
     public RouteInformation(ArrayList<Waypoints> waypointsArrayList, ArrayList<String> sumTimeArrayList, ArrayList<Integer> distanceArrayList,
                             ArrayList<String> streetUpArrayList, ArrayList<String> streetDownArrayList, ArrayList<String> streetNumberUpArrayList,
                             ArrayList<String> streetNumberDownArrayList, ArrayList<String> stationIdUpArrayList, ArrayList<String> stationIdDownArrayList,
                             ArrayList<Integer> stationBikesUpNowArrayList, ArrayList<Integer> stationBikesDownNowArrayList, ArrayList<Integer> stationBikesUpEstArrayList,
                             ArrayList<Integer> stationBikesDownEstArrayList, ArrayList<Integer> stationSlotsUpNowArrayList, ArrayList<Integer> stationSlotsDownNowArrayList,
-                            ArrayList<Integer> stationSlotsUpEstArrayList, ArrayList<Integer> stationSlotsDownEstArrayList) {
+                            ArrayList<Integer> stationSlotsUpEstArrayList, ArrayList<Integer> stationSlotsDownEstArrayList, ArrayList<Double> stationRiskArrayList) {
 
 
         this.waypointsArrayList = waypointsArrayList;
@@ -51,6 +53,7 @@ public class RouteInformation {
         this.stationSlotsDownNowArrayList = stationSlotsDownNowArrayList;
         this.stationSlotsUpEstArrayList = stationSlotsUpEstArrayList;
         this.stationSlotsDownEstArrayList = stationSlotsDownEstArrayList;
+        this.stationRiskArrayList = stationRiskArrayList;
     }
 
     public ArrayList<Waypoints> getWaypointsArrayList() {
@@ -119,5 +122,9 @@ public class RouteInformation {
 
     public ArrayList<Integer> getStationSlotsDownEstArrayList() {
         return stationSlotsDownEstArrayList;
+    }
+
+    public ArrayList<Double> getStationRiskArrayList() {
+        return stationRiskArrayList;
     }
 }

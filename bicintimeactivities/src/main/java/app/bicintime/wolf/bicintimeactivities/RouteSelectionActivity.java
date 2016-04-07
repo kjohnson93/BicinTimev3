@@ -339,7 +339,7 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
 
                 RouteInformation routeTest = new RouteInformation(waypointsArrayList, sumTimeArrayList, distanceArrayList, streetUpArrayList, streetDownArrayList, streetNumberUpArrayList, streetNumberDownArrayList
                 , stationIdUpArrayList, stationIdDownArrayList, stationBikesUpNowArrayList, stationBikesDownNowArrayList, stationBikesUpEstArrayList, stationBikesDownEstArrayList,
-                        stationSlotsUpNowArrayList, stationSlotsDownNowArrayList , stationSlotsUpEstArrayList, stationSlotsDownEstArrayList);
+                        stationSlotsUpNowArrayList, stationSlotsDownNowArrayList , stationSlotsUpEstArrayList, stationSlotsDownEstArrayList, stationRiskArrayList);
                 Log.d(LOG_DLOAD, "Size of waypoints array inside thread is: " + waypointsArrayList.size());
 //                expListAdapter.notifyDataSetChanged();
 
