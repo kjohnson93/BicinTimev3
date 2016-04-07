@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Start Street"
+                android:id="@+id/txtvw_leave"
                 android:clickable="false"/>
 
 
@@ -95,6 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Bike Start Street"
+                    android:id="@+id/txtvw_up"
                     android:clickable="false"/>
 
 
@@ -145,6 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Bike arrive street"
+                    android:id="@+id/txtvw_down"
                     android:clickable="false"/>
 
 
@@ -195,6 +198,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Arrival street"
+                    android:id="@+id/txtvw_arrive"
                     android:clickable="false"></TextView>
 
             </LinearLayout>

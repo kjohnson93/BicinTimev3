@@ -43,6 +43,7 @@ public class GetBicinTimeJsonData extends GetRawData {
     private ArrayList<Integer> stationSlotsDownNowArrayList = new ArrayList<>();
     private ArrayList<Integer> stationSlotsUpEstArrayList = new ArrayList<>();
     private ArrayList<Integer> stationSlotsDownEstArrayList = new ArrayList<>();
+    private ArrayList<Double> stationRiskArrayList = new ArrayList<>();
 
     public GetBicinTimeJsonData(String origin, String destination, String time) {
         super(null);
@@ -222,6 +223,7 @@ public class GetBicinTimeJsonData extends GetRawData {
                 stationSlotsDownNowArrayList.add(slotsDownNow);
                 stationBikesDownEstArrayList.add(bikesDownEst);
                 stationSlotsDownEstArrayList.add(slotsDownEst);
+                stationRiskArrayList.add(departure_risk);
 
 
             }
@@ -322,5 +324,9 @@ public class GetBicinTimeJsonData extends GetRawData {
 
     public ArrayList<Integer> getStationSlotsUpEstArrayList() {
         return stationSlotsUpEstArrayList;
+    }
+
+    public ArrayList<Double> getStationRiskArrayList() {
+        return stationRiskArrayList;
     }
 }

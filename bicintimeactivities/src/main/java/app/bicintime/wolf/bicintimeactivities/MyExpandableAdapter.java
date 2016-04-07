@@ -49,6 +49,41 @@ public class MyExpandableAdapter extends BaseExpandableListAdapter {
 //        TextView item = (TextView) convertView.findViewById(R.id.laptop);
 //
 //        item.setText(laptop);
+
+        ArrayList<String> streetUpArrayList = routeInformation.getStreetUpArrayList();
+        ArrayList<String> streetDownArrayList = routeInformation.getStreetDownArrayList();
+
+
+        TextView txtvwUp = (TextView) convertView.findViewById(R.id.txtvw_up);
+        TextView txtvwDown = (TextView) convertView.findViewById(R.id.txtvw_down);
+
+        switch (groupPosition) {
+
+
+            case 0:
+
+                txtvwUp.setText(streetUpArrayList.get(groupPosition));
+                txtvwDown.setText(streetDownArrayList.get(groupPosition));
+                break;
+            case 1:
+                txtvwUp.setText(streetUpArrayList.get(groupPosition));
+                txtvwDown.setText(streetDownArrayList.get(groupPosition));
+                break;
+            case 2:
+                txtvwUp.setText(streetUpArrayList.get(groupPosition));
+                txtvwDown.setText(streetDownArrayList.get(groupPosition));
+                break;
+            case 3:
+                txtvwUp.setText(streetUpArrayList.get(groupPosition));
+                txtvwDown.setText(streetDownArrayList.get(groupPosition));
+                break;
+            case 4:
+                txtvwUp.setText(streetUpArrayList.get(groupPosition));
+                txtvwDown.setText(streetDownArrayList.get(groupPosition));
+                break;
+
+
+        }
         return convertView;
     }
 

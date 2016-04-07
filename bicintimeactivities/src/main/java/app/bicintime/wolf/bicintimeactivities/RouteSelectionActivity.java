@@ -28,6 +28,7 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
     private String startLocation, endLocation, timeSelected;
 
     Map<String, List<String>> childrenItems;
+    Boolean isResumed = false;
 
 
     ProgressDialog progressDialog;
@@ -52,6 +53,7 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
     private ArrayList<Integer> stationSlotsDownNowArrayList = new ArrayList<>();
     private ArrayList<Integer> stationSlotsUpEstArrayList = new ArrayList<>();
     private ArrayList<Integer> stationSlotsDownEstArrayList = new ArrayList<>();
+    private ArrayList<Double> stationRiskArrayList = new ArrayList<>();
 
     ExpandableListView expandableList;
 
@@ -69,8 +71,6 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
         setTitle("Choose a Route");
 
 
-        setGroupParents();
-        setChildData();
 
         getSharedPreferencesData();
 
@@ -157,14 +157,30 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
 
     }
 
-    //todo cheese
-    //Setting parent text
+    //Sets the parent title texts ( km, time and risk)
     public void setGroupParents() {
-        parentItems.add("Route 1 7.9 km (98 min)");
-        parentItems.add("Route 2 8.1 km (100 min)");
-        parentItems.add("Route 3 8.1 km (101 min)");
-        parentItems.add("Route 4 8.1 km (101 min)");
-        parentItems.add("Route 5 8.2 km (102 min)");
+
+        //auxiliar arraylists
+        ArrayList<String> titles = new ArrayList<>();
+        ArrayList<Double> distValues = new ArrayList<>();
+        ArrayList<Double> riskValues = new ArrayList<>();
+
+            for (int i = 0; i < distanceArrayList.size(); i++) {
+                distValues.add(Double.valueOf(distanceArrayList.get(i)/1000.00));
+
+                //to round down up to two decimals
+                riskValues.add(Math.round(((1.0 - (Double.valueOf((stationRiskArrayList.get(i)))))*100.0)*100.0)/100.0);
+
+                titles.add("" + distValues.get(i) + " km" + " (" + sumTimeArrayList.get(i) + ") " + riskValues.get(i) + " % Success");
+                parentItems.add(titles.get(i));
+            }
+
+//
+//        parentItems.add("Route 1 7.9 km (98 min)");
+//        parentItems.add("Route 2 8.1 km (100 min)");
+//        parentItems.add("Route 3 8.1 km (101 min)");
+//        parentItems.add("Route 4 8.1 km (101 min)");
+//        parentItems.add("Route 5 8.2 km (102 min)");
     }
 
     //Setting child text
@@ -181,30 +197,30 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
 
         //todo cheeese
         for (String route : parentItems) {
-//            if (route.equals("Route 1")) {
-//                loadChild(route1);
-//            } else if (route.equals("Route 2"))
-//                loadChild(route2);
-//            else if (route.equals("Route 3"))
-//                loadChild(route3);
-//            else if (route.equals("Route 4"))
-//                loadChild(route4);
-//            else if (route.equals("Route 5"))
-//                loadChild(route4);
-//            else
-//                loadChild(route5);
-            if (route.equals("Route 1 7.9 km (98 min)")) {
+            if (route.equals("Route 1")) {
                 loadChild(route1);
-            } else if (route.equals("Route 2 8.1 km (100 min)"))
+            } else if (route.equals("Route 2"))
                 loadChild(route2);
-            else if (route.equals("Route 3 8.1 km (101 min)"))
+            else if (route.equals("Route 3"))
                 loadChild(route3);
-            else if (route.equals("Route 4 8.1 km (101 min)"))
+            else if (route.equals("Route 4"))
                 loadChild(route4);
-            else if (route.equals("Route 5 8.2 km (102 min)"))
+            else if (route.equals("Route 5"))
                 loadChild(route4);
             else
                 loadChild(route5);
+//            if (route.equals("Route 1 7.9 km (98 min)")) {
+//                loadChild(route1);
+//            } else if (route.equals("Route 2 8.1 km (100 min)"))
+//                loadChild(route2);
+//            else if (route.equals("Route 3 8.1 km (101 min)"))
+//                loadChild(route3);
+//            else if (route.equals("Route 4 8.1 km (101 min)"))
+//                loadChild(route4);
+//            else if (route.equals("Route 5 8.2 km (102 min)"))
+//                loadChild(route4);
+//            else
+//                loadChild(route5);
 
 
             childrenItems.put(route, childItems);
@@ -248,8 +264,11 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
     protected void onResume() {
         super.onResume();
 
-        ProcessWaypoints processWaypoints = new ProcessWaypoints(startLocation, endLocation, timeSelected);
-        processWaypoints.execute();
+        if(!isResumed) {
+            ProcessWaypoints processWaypoints = new ProcessWaypoints(startLocation, endLocation, timeSelected);
+            processWaypoints.execute();
+            isResumed = true;
+        }
 
 
     }
@@ -316,12 +335,19 @@ public class RouteSelectionActivity extends BaseActivity implements ExpandableLi
                 stationSlotsDownNowArrayList = getStationSlotsDownNowArrayList();
                 stationSlotsUpEstArrayList = getStationSlotsUpEstArrayList();
                 stationSlotsDownEstArrayList = getStationSlotsDownEstArrayList();
+                stationRiskArrayList = getStationRiskArrayList();
 
                 RouteInformation routeTest = new RouteInformation(waypointsArrayList, sumTimeArrayList, distanceArrayList, streetUpArrayList, streetDownArrayList, streetNumberUpArrayList, streetNumberDownArrayList
                 , stationIdUpArrayList, stationIdDownArrayList, stationBikesUpNowArrayList, stationBikesDownNowArrayList, stationBikesUpEstArrayList, stationBikesDownEstArrayList,
                         stationSlotsUpNowArrayList, stationSlotsDownNowArrayList , stationSlotsUpEstArrayList, stationSlotsDownEstArrayList);
                 Log.d(LOG_DLOAD, "Size of waypoints array inside thread is: " + waypointsArrayList.size());
 //                expListAdapter.notifyDataSetChanged();
+
+
+                setGroupParents();
+                setChildData();
+                //once data loading finished, start to paint the children on the listview
+                //this may be done by calling the adapter before the progressDialog dismiss i think
 
 
 
